@@ -85,22 +85,7 @@ Poskládal s AI turnusy a směny pro nové pracovníky na cídírně a ruční f
 
 ---
 
-### Slide 6 — Hlasování
-
-Teď vy
-QR na hlasování
-
-## Tři otázky, minuta času
-1
-Používáte AI?
-2
-Co s AI děláte?
-3
-Máte placený nástroj?
-
----
-
-### Slide 7 — Základní nastavení
+### Slide 6 — Základní nastavení
 
 Základní nastavení
 Ne google.cz
@@ -115,7 +100,7 @@ AI-first · sledujte, co děláte opakovaně · hotové je lepší než dokonal�
 
 ---
 
-### Slide 8 — AI nás musí znát
+### Slide 7 — AI nás musí znát
 
 AI nás musí znát
 Na základě toho, co o mně víš, navrhni tři konkrétní věci, kde mi může AI pomoct.
@@ -123,13 +108,12 @@ Bez kontextu:
 univerzální rady, prakticky k ničemu.
 S osobním kontextem:
 vaše projekty, vaše procesy, vaše opakované úkoly.
-QR: prompt na osobní kontext
 Zadání, se kterým AI vede rozhovor a sestaví váš osobní kontext.
 slevarenskelisty-prompt.vercel.app
 
 ---
 
-### Slide 9 — Přechod
+### Slide 8 — Přechod
 
 O tom ale dnešní přednáška není.
 
@@ -139,7 +123,7 @@ AI umí hledat na internetu. Ve vašich vlastních znalostech zatím ne.
 
 ---
 
-### Slide 10 — Kde končí znalosti
+### Slide 9 — Kde končí znalosti
 
 Jak tyto, a nejen tyto, informace uchovat?
 
@@ -159,7 +143,7 @@ dokud nepřijde další konference
 
 ---
 
-### Slide 11 — Historie
+### Slide 10 — Historie
 
 Není to nový nápad
 
@@ -231,7 +215,7 @@ Obyčejné textové soubory (.md): čte je člověk, čte je AI, nepatří žád
 
 ---
 
-### Slide 12 — Můj mozek — graf
+### Slide 11 — Můj mozek — graf
 
 Můj druhý mozek
 Adopce
@@ -242,7 +226,7 @@ Prompty
 
 ---
 
-### Slide 13 — Jak to vzniká
+### Slide 12 — Jak to vzniká
 
 1. den 62. Slévárenských dní
 
@@ -269,7 +253,7 @@ co z toho je pro mě?
 
 ---
 
-### Slide 14 — Témata ročníků
+### Slide 13 — Témata ročníků
 
 Slévárenské dny 2011–2025 · 479 příspěvků v mozku
 
@@ -344,7 +328,7 @@ Slovo v buňce je příklad z ročníku, ne jediná přednáška. Klik na buňku
 
 ---
 
-### Slide 15 — Zpět k otázce
+### Slide 14 — Zpět k otázce
 
 Zpět k první otázce
 
@@ -353,7 +337,7 @@ z těchto přednášek?
 
 ---
 
-### Slide 16 — Jít dál
+### Slide 15 — Jít dál
 
 Můžeme jít dál
 
@@ -367,29 +351,7 @@ doplňování svých znalostních systémů „druhých mozků“
 
 ---
 
-### Slide 17 — Materiály
-
-QR: materiály ke stažení
-Jeden QR kód, všechno na jednom místě
-
-## Nahrajte si to do své AI a ptejte se
-- Článek ze Slévárenských listů pro AI
-- Přepis této prezentace
-- Přepis mé přednášky (do pár dní)
-- Prompt pro vaši AI: sestaví váš osobní kontext
-
----
-
-### Slide 18 — Můj mozek naživo
-
-Živá ukázka
-
-## Zeptejme se mozku
-Která témata se na Slévárenských dnech v posledních letech opakují, co je nového a co z toho je použitelné pro Slévárnu Kuřim?
-
----
-
-### Slide 19 — Budujte lidi
+### Slide 16 — Budujte lidi
 
 A co dál?
 
@@ -407,10 +369,9 @@ Bezpečnostní listy materiálů
 
 ---
 
-### Slide 20 — Děkuji
-
-QR: materiály ke stažení
+### Slide 17 — Děkuji
 
 ## Děkuji za pozornost
 Materiály ke stažení: článek, přepisy a prompt pro vaši AI.
+slevarenske-dny-ai.vercel.app
 Pavel Šebesta · Slévárna Kuřim

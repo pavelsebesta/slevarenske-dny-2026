@@ -262,6 +262,7 @@ p.lead { font-size: 30px; line-height: 1.5; color: var(--ink-2); max-width: 1200
 /* QR zástupce */
 .qr { width: 260px; height: 260px; border: 2px dashed var(--border); border-radius: var(--radius); display: grid; place-items: center; text-align: center;
   font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-400); padding: 20px; background: var(--bg-2); flex: none; }
+.qrimg { border-radius: 14px; border: 1px solid var(--border); flex: none; background: #fff; }
 .qrrow { display: flex; gap: 60px; align-items: center; }
 
 /* graf: plocha --chrome (vždy tmavá), aby sklo mozku svítilo v obou režimech */
@@ -376,21 +377,6 @@ html.laser, html.laser * { cursor: none !important; user-select: none; }
   </div>
   </section>
 
-<section class="slide" data-title="Hlasování">
-  <div class="kicker">Teď vy</div>
-  <div class="qrrow">
-    <div class="qr">QR na hlasování</div>
-    <div>
-      <h2>Tři otázky, minuta času</h2>
-      <div class="qlist">
-        <div><b>1</b>Používáte AI?</div>
-        <div><b>2</b>Co s AI děláte?</div>
-        <div><b>3</b>Máte placený nástroj?</div>
-      </div>
-    </div>
-  </div>
-  </section>
-
 <section class="slide" data-title="Základní nastavení" data-fx="1">
   <div class="kicker">Základní nastavení</div>
   <div class="cards c3 reveal">
@@ -407,7 +393,7 @@ html.laser, html.laser * { cursor: none !important; user-select: none; }
     <div class="msg q">Na základě toho, co o mně víš, navrhni tři konkrétní věci, kde mi může AI pomoct.</div>
     <div class="msg a"><b>Bez kontextu:</b> univerzální rady, prakticky k ničemu.<br><b>S osobním kontextem:</b> vaše projekty, vaše procesy, vaše opakované úkoly.</div>
   </div>
-  <div class="qrrow" style="margin-top:44px"><div class="qr" style="width:200px;height:200px">QR: prompt na osobní kontext</div>
+  <div class="qrrow" style="margin-top:44px"><img class="qrimg" src="img/qr-prompt.svg" alt="QR kód: slevarenskelisty-prompt.vercel.app" style="width:200px;height:200px">
     <p class="lead">Zadání, se kterým AI vede rozhovor a sestaví váš osobní kontext.<br><span class="mono small">slevarenskelisty-prompt.vercel.app</span></p></div>
   </section>
 
@@ -577,28 +563,6 @@ html.laser, html.laser * { cursor: none !important; user-select: none; }
   </div>
   </section>
 
-<section class="slide" data-title="Materiály">
-  <div class="qrrow" style="gap:80px">
-    <div class="qr" style="width:340px;height:340px">QR: materiály ke stažení</div>
-    <div>
-      <div class="kicker">Jeden QR kód, všechno na jednom místě</div>
-      <h2 style="margin-bottom:24px">Nahrajte si to do své AI a ptejte se</h2>
-      <ul class="zlist">
-        <li>Článek ze Slévárenských listů pro AI</li>
-        <li>Přepis této prezentace</li>
-        <li>Přepis mé přednášky (do pár dní)</li>
-        <li>Prompt pro vaši AI: sestaví váš osobní kontext</li>
-      </ul>
-    </div>
-  </div>
-  </section>
-
-<section class="slide" data-title="Můj mozek naživo">
-  <div class="kicker">Živá ukázka</div>
-  <h2>Zeptejme se mozku</h2>
-  <div class="chat"><div class="msg q">Která témata se na Slévárenských dnech v posledních letech opakují, co je nového a co z toho je použitelné pro Slévárnu Kuřim?</div></div>
-  </section>
-
 <section class="slide" data-title="Budujte lidi" data-fx="1" style="padding-top:50px;padding-bottom:46px">
   <div class="kicker" style="margin-bottom:10px">A co dál?</div>
   <h2 style="margin-bottom:12px">Nebudujte systémy. <span class="acc">Budujte lidi.</span></h2>
@@ -622,10 +586,10 @@ html.laser, html.laser * { cursor: none !important; user-select: none; }
 
 <section class="slide" data-title="Děkuji">
   <div class="qrrow" style="gap:90px">
-    <div class="qr" style="width:380px;height:380px">QR: materiály ke stažení</div>
+    <img class="qrimg" src="img/qr-materialy.svg" alt="QR kód: slevarenske-dny-ai.vercel.app" style="width:380px;height:380px">
     <div>
       <h1 style="font-size:104px;margin-bottom:30px">Děkuji za pozornost</h1>
-      <p class="lead">Materiály ke stažení: článek, přepisy a prompt pro vaši AI.</p>
+      <p class="lead">Materiály ke stažení: článek, přepisy a prompt pro vaši AI.<br><span class="mono" style="font-size:30px;color:var(--ink)">slevarenske-dny-ai.vercel.app</span></p>
       <p class="lead" style="margin-top:30px;color:var(--ink)">Pavel Šebesta · Slévárna Kuřim</p>
     </div>
   </div>
