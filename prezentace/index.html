@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slévárenské dny 2026 – prezentace</title>
+<!--
+  Prezentace: Od přednášek k druhému mozku (v2). Offline, bez závislostí.
+  Ovládání: ←/→ mezera = posun · N = poznámky řečníka · T = světlý/tmavý · F = celá obrazovka · G = přehled slidů
+  Design: design system v3 interních aplikací Slévárny Kuřim (SLK-USECASES/01-design.md), fonty lokálně ve fonts/.
+-->
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* Design system v3 · interní aplikace Slévárna Kuřim (4_Brain/Moje projekty/SLK-USECASES/01-design.md)
+   Průmyslový, hutný, čitelný. Málo barev, každá má význam; stav = levý okraj. Výchozí světlý, tmavý ručně laděný (T). */
+:root {
+  /* paleta SLK v3 */
+  --red: oklch(0.53 0.19 25); --red-h: oklch(0.58 0.20 25); --red-light: oklch(0.96 0.025 25); --red-mid: #f0b0b0;
+  --green: oklch(0.53 0.14 145); --amber: oklch(0.58 0.15 70); --amber-light: oklch(0.96 0.035 70); --amber-mid: oklch(0.82 0.09 70);
+  --black: oklch(0.20 0.006 260); --gray-700: oklch(0.44 0.007 260); --gray-500: oklch(0.56 0.006 260); --gray-400: oklch(0.66 0.006 260);
+  --gray-200: oklch(0.90 0.004 260); --gray-100: oklch(0.965 0.003 260); --gray-50: oklch(0.985 0.002 260); --white: oklch(0.995 0.001 260);
+  --border: oklch(0.85 0.005 260); --border-light: oklch(0.91 0.004 260);
+  --chrome: #14161a;
+  --shadow-sm: 0 1px 2px rgba(20,25,40,.05); --shadow: 0 2px 10px rgba(20,25,40,.07);
+  --radius: 14px; --radius-sm: 10px;
+  /* role v prezentaci (graf mozku je čte taky) */
+  --bg: var(--gray-50); --bg-2: var(--white); --ink: var(--black); --ink-2: var(--gray-500); --line: var(--border-light);
+  --accent: var(--red); --accent-2: var(--amber); --steel: var(--gray-700); --good: var(--green);
+  --brain: var(--red);
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", Menlo, Consolas, monospace;
+}
+:root[data-theme="dark"] {
+  --red: oklch(0.68 0.17 25); --red-h: oklch(0.73 0.17 25); --red-light: oklch(0.30 0.06 25); --red-mid: oklch(0.44 0.11 25);
+  --green: oklch(0.68 0.13 145); --amber: oklch(0.74 0.13 70); --amber-light: oklch(0.31 0.06 70); --amber-mid: oklch(0.50 0.10 70);
+  --black: oklch(0.94 0.003 260); --gray-700: oklch(0.74 0.007 260); --gray-500: oklch(0.62 0.006 260); --gray-400: oklch(0.50 0.006 260);
+  --gray-200: oklch(0.40 0.006 260); --gray-100: oklch(0.14 0.006 260); --gray-50: oklch(0.10 0.006 260); --white: oklch(0.26 0.007 260);
+  --border: oklch(0.42 0.006 260); --border-light: oklch(0.36 0.006 260);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow: 0 4px 16px rgba(0,0,0,.55);
+  --brain: oklch(0.68 0.17 25);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--ink); font-family: var(--font); overflow: hidden;
+  transition: background-color .25s ease, color .25s ease; }
+
+/* 16:9 plátno 1600×900, škálované na okno */
+#deck { position: absolute; width: 1600px; height: 900px; left: 50%; top: 50%; transform-origin: center; }
+.slide { position: absolute; inset: 0; padding: 90px 110px; display: flex; flex-direction: column; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+.slide.active { opacity: 1; pointer-events: auto; }
+.slide > aside.notes { display: none; }
+
+/* typografie: Barlow Condensed verzálkami na nadpisy a labely, Manrope na text */
+.kicker { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 22px; display: flex; align-items: center; gap: 14px; }
+.kicker::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+h1 { font-family: var(--display); font-size: 92px; line-height: 1; font-weight: 800; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 60px; line-height: 1.02; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; margin-bottom: 40px; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+p.lead { font-size: 30px; line-height: 1.5; color: var(--ink-2); max-width: 1200px; }
+.muted { color: var(--ink-2); }
+.acc { color: var(--accent); }
+.small { font-size: 22px; color: var(--ink-2); }
+.src { position: absolute; bottom: 44px; left: 110px; font-size: 16px; color: var(--gray-400); }
+.badge { display: inline-block; font-family: var(--display); font-size: 16px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 6px; background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-mid); }
+
+/* čísla = KPI karty (levý okraj 5 px) */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.stat { background: var(--bg-2); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius);
+  padding: 30px 36px; box-shadow: var(--shadow-sm); }
+.stat .n { font-family: var(--display); font-size: 128px; font-weight: 800; line-height: .95; color: var(--accent); font-variant-numeric: tabular-nums; }
+.stat .l { font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-top: 14px; line-height: 1.25; }
+
+/* karty a toky: stav = levý okraj */
+.cards { display: grid; gap: 24px; }
+.cards.c3 { grid-template-columns: repeat(3, 1fr); }
+.cards.c4 { grid-template-columns: repeat(4, 1fr); }
+.cards.c2 { grid-template-columns: repeat(2, 1fr); }
+.card { background: var(--bg-2); border: 1px solid var(--line); border-left: 4px solid var(--gray-400); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow-sm); }
+.card h3 { font-size: 34px; margin-bottom: 10px; }
+.card p { font-size: 22px; line-height: 1.45; color: var(--ink-2); }
+.card .n { font-family: var(--display); font-size: 64px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 12px; }
+.card .ico, .step .ico { font-size: 44px; margin-bottom: 14px; display: block; }
+.flow { display: flex; align-items: stretch; gap: 0; }
+.flow .step { flex: 1; background: var(--bg-2); border: 1px solid var(--line); border-left: 4px solid var(--gray-400); border-radius: var(--radius);
+  padding: 28px 22px; box-shadow: var(--shadow-sm); }
+.flow .step.hot { border-left-color: var(--accent); }
+.flow .step b { display: block; font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+.flow .step span { font-size: 19px; color: var(--ink-2); line-height: 1.4; display: block; }
+.flow .arrow { width: 52px; display: grid; place-items: center; color: var(--gray-400); font-family: var(--display); font-size: 38px; font-weight: 700; }
+.qlist { display: flex; flex-direction: column; gap: 14px; }
+.qlist div { display: flex; gap: 18px; align-items: baseline; font-size: 28px; }
+.qlist b { font-family: var(--display); font-size: 30px; color: var(--accent); min-width: 24px; }
+
+/* časová osa */
+.timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 20px; }
+.timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 34px; height: 2px; background: var(--gray-200); }
+.tl { position: relative; padding-top: 70px; }
+.tl::before { content: ""; position: absolute; top: 24px; left: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); border: 3px solid var(--gray-700); }
+.timeline:not([data-track]) .tl.now::before { border-color: var(--accent); background: var(--accent); animation: pulse-ring 1.8s ease-out infinite; }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 45%, transparent); } 100% { box-shadow: 0 0 0 16px transparent; } }
+.tl .y { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--accent); }
+.tl b { display: block; font-family: var(--display); font-size: 32px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin: 8px 0 8px; }
+.tl p { font-size: 20px; color: var(--ink-2); line-height: 1.4; }
+
+/* zoom detailu přes slide (časová osa): otevře se z místa položky, zavře šipkou nebo klikem */
+.tl.zoomable { cursor: pointer; }
+.tl.zoomable b::after { content: "\00a0+"; color: var(--accent); }   /* pevná mezera: „+“ nepřeskočí na nový řádek */
+.tl.zoomable.on b { color: var(--accent); }
+.zoomcard { position: absolute; inset: 60px 70px; background: var(--bg-2); border: 1px solid var(--line); border-left: 6px solid var(--accent);
+  border-radius: var(--radius); box-shadow: 0 16px 48px rgba(20,25,40,.18); padding: 56px 64px; display: flex; flex-direction: column; justify-content: center;
+  transform: scale(.12); opacity: 0; pointer-events: none; transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .35s ease; z-index: 3; cursor: pointer; }
+.zoomcard.open { transform: none; opacity: 1; pointer-events: auto; }
+.zgrid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; }
+.zlist { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+.zlist li { font-size: 26px; line-height: 1.4; padding-left: 26px; position: relative; }
+.zlist li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+.zcards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+/* víc pohledů v jednom místě: střídají se po 5 s (portrét → kartotéka → kartička → schéma), šipka přeskočí */
+.zstage { display: grid; }
+.zstage > * { grid-area: 1 / 1; align-self: center; opacity: 0; transform: scale(.96); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+.zstage > .on { opacity: 1; transform: none; }
+.zphoto { margin: 0; }
+.zphoto img { display: block; width: 100%; border-radius: 6px; box-shadow: var(--shadow); }
+.zphoto.tilt img { transform: rotate(-1.2deg); }
+.zphoto figcaption { margin-top: 12px; font-size: 15px; line-height: 1.35; color: var(--gray-400); }
+.zc { background: var(--amber-light); border: 1px solid var(--amber-mid); border-radius: 6px; padding: 18px; font-size: 20px; box-shadow: var(--shadow-sm); transform: rotate(-1deg); }
+.zc:nth-child(2n) { transform: rotate(1.2deg); }
+.zc i { display: block; font-style: normal; font-family: var(--mono); font-weight: 600; color: var(--accent); font-size: 22px; margin-bottom: 6px; }
+.zc small { display: block; color: var(--ink-2); font-size: 16px; margin-top: 6px; }
+.ph { border: 2px dashed var(--border); border-radius: var(--radius); height: 480px; display: grid; place-items: center; background: var(--bg-2);
+  font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-400); }
+.ahr { display: grid; grid-template-columns: 1fr 250px; gap: 44px; align-items: center; }
+.ahr .zlist { gap: 12px; }
+.ahr .zlist li { font-size: 23px; }
+@media (prefers-reduced-motion: reduce) { .zoomcard { transition: none; } }
+
+/* infografika témat ročníků */
+.tmap { display: flex; flex-direction: column; gap: 6px; }
+.tm-row { display: grid; grid-template-columns: 210px repeat(11, 1fr); align-items: stretch; gap: 6px; }
+.tm-head .tm-y { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--ink-2); text-align: center; padding-bottom: 6px; }
+.tm-name { font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; display: flex; align-items: center;
+  padding-left: 14px; border-left: 4px solid var(--gray-400); }
+.tm-c { background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; min-height: 62px; padding: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+.tm-c i { width: 14px; height: 14px; border-radius: 50%; background: var(--gray-700); }
+.tm-c:empty { background: transparent; border-style: dashed; }
+.tm-c span { font-size: 14px; line-height: 1.25; color: var(--ink-2); }
+.tm-gap { margin-left: 22px; }
+/* TM-CSS */
+.zk { cursor: pointer; transition: border-color .15s, background .15s; }
+.tm-c.zk:hover, .tm-c.zk:focus-visible { border-color: var(--accent); background: var(--bg); outline: none; }
+.tm-head .tm-y.zk:hover { color: var(--accent); }
+.tm-head .tm-y small { display: block; font-size: 13px; font-weight: 500; opacity: .8; }
+.tm-more .tm-name { color: var(--ink-2); border-left-color: var(--line); }
+.tm-more .tm-wide u { text-decoration: none; color: var(--accent); }
+.tz h3 { font-family: var(--display); font-size: 34px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
+.tz p.ts { color: var(--ink-2); font-size: 18px; margin-bottom: 18px; }
+.tz ul { list-style: none; columns: 2; column-gap: 40px; font-size: 20px; line-height: 1.3; }
+.tz.sm ul { columns: 1; font-size: 30px; line-height: 1.3; }
+.tz.sm li { padding-bottom: 12px; padding-left: 26px; }
+.tz.sm li::before { width: 10px; height: 10px; }
+.tz.md ul { columns: 2; font-size: 24px; }
+.tz.big ul { columns: 2; font-size: 18px; }
+.tz li { break-inside: avoid; padding: 0 0 8px 20px; position: relative; }
+.tz li::before { content: ""; position: absolute; left: 0; top: .5em; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
+.tq { margin-top: 18px; padding: 14px 22px; border-left: 4px solid var(--accent); background: var(--red-light, rgba(200,30,40,.07)); border-radius: 6px; }
+.tq b { display: block; font-size: 20px; color: var(--accent); margin-bottom: 10px; }
+.tq p { font-size: 21px; line-height: 1.4; font-weight: 500; margin: 0 0 10px; }
+.tq cite { display: block; font-style: normal; font-size: 16px; color: var(--ink-2); }
+.tz h4 { font-family: var(--display); font-size: 17px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 10px 0 6px; column-span: all; }
+/* /TM-CSS */
+.tm-more .tm-wide { grid-column: 2 / -1; min-height: 36px; border-style: dashed; }
+.tm-more .tm-wide span { font-size: 15px; color: var(--ink-2); }
+.tm-c .n { font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--ink); line-height: 1; }
+.tm-ai .tm-c .n { color: var(--accent); }
+.tm-head .tm-y small { display: block; font-size: 13px; font-weight: 500; color: var(--gray-500, var(--ink-2)); opacity: .8; }
+.tm-rest .tm-name { color: var(--ink-2); border-left-color: var(--gray-300, var(--line)); }
+.tm-rest .tm-c { min-height: 40px; background: var(--bg-2); }
+.tm-ai .tm-name { border-left-color: var(--accent); color: var(--accent); }
+.tm-ai .tm-c:not(:empty) { border-color: var(--red-mid); background: var(--red-light); }
+.tm-ai .tm-c i { background: var(--accent); }
+.tm-ai .tm-c span { color: var(--ink); font-weight: 600; }
+/* slide Budujme lidi: kompaktní tok + zpětné vazby kolegů */
+.flow.tight .step { padding: 18px 20px 20px; }
+.flow.tight .step .ico { font-size: 36px; margin-bottom: 6px; }
+.flow.tight .step b { font-size: 29px; margin-bottom: 6px; }
+.flow.tight .step span:not(.ico) { font-size: 21px; }
+.cards.fb { margin-top: 48px; gap: 18px; }
+.cards.fb .card { padding: 22px 24px; border-left-color: var(--accent); }
+.cards.fb h3 { font-size: 28px; margin-bottom: 8px; }
+.cards.fb p { font-size: 22px; line-height: 1.38; }
+.flow.big .step { padding: 40px 28px; display: grid; place-items: center; text-align: center; }
+.flow.big .step b { font-size: 40px; margin: 0; }
+/* razítko přes kartu (šipkou, data-fx) */
+.stamp { position: absolute; left: 50%; top: 50%; z-index: 2; padding: 10px 22px; border: 6px solid var(--accent); border-radius: 10px; color: var(--accent); background: color-mix(in oklch, var(--bg-2) 72%, transparent);
+  font-family: var(--display); font-size: 58px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; opacity: 0; transform: translate(-50%,-50%) rotate(-11deg) scale(1.9); pointer-events: none; }
+.slide.fx1 .stamp { opacity: .94; transform: translate(-50%,-50%) rotate(-11deg); transition: transform .16s cubic-bezier(.5,0,1,.6), opacity .1s linear; }
+.golive { align-self: flex-start; margin-top: 44px; padding: 16px 34px; border-radius: var(--radius-sm); background: var(--accent); color: #fff; text-decoration: none;
+  font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; box-shadow: var(--shadow); }
+/* závěr: dokumenty vstupují do mozku */
+.fstage { display: grid; grid-template-columns: 1fr 560px 1fr; gap: 64px; align-items: center; margin-top: 18px; }
+.fcol { display: flex; flex-direction: column; gap: 16px; }
+.fbrain { position: relative; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 6px; }
+.fbrain canvas { display: block; width: 100%; height: auto; }
+.fdoc { position: relative; padding: 15px 18px; background: var(--bg-2); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+  font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.12; opacity: 0; }
+.fcol.r .fdoc { border-left: 1px solid var(--line); border-right: 4px solid var(--accent); text-align: right; }
+.slide.fx1 .fdoc { opacity: 1; animation: rise .5s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i) * .22s); }
+.fdoc::after { content: ""; position: absolute; top: 50%; left: 100%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--accent); opacity: 0; z-index: 2; }
+.fcol.r .fdoc::after { left: auto; right: 100%; }
+.slide.fx1 .fdoc::after { animation: feedR 2.2s ease-in infinite; animation-delay: calc(var(--i) * .22s + .5s); }
+.slide.fx1 .fcol.r .fdoc::after { animation-name: feedL; }
+@keyframes feedR { 0% { transform: none; opacity: 1; } 70%, 100% { transform: translateX(110px); opacity: 0; } }
+@keyframes feedL { 0% { transform: none; opacity: 1; } 70%, 100% { transform: translateX(-110px); opacity: 0; } }
+.phone { margin-top: 56px; font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+
+/* ---------- animace ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes lnIn { to { opacity: 1; transform: none; } }
+@keyframes forget { to { opacity: .32; filter: grayscale(1); } }
+@keyframes fog { to { filter: blur(2.4px); opacity: .55; } }
+@keyframes lit { 0%, 24%, 100% { } 5%, 19% { border-left-color: var(--accent); transform: translateY(-8px); box-shadow: var(--shadow); } }
+@keyframes aiOn { from { background: var(--bg-2); border-color: var(--line); } }
+@keyframes aiDot { from { background: var(--gray-700); transform: scale(1); } 60% { transform: scale(1.6); } }
+/* postupné najetí karet a kroků */
+.slide.active .reveal > * { animation: rise .55s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i, 0) * .12s + .15s); }
+/* zapomínání: karty po chvíli vyblednou */
+.slide.active .forget > .card { animation: rise .55s cubic-bezier(.2,.8,.2,1) backwards, forget 1.4s ease forwards;
+  animation-delay: calc(var(--i, 0) * .12s + .15s), calc(3.2s + var(--i, 0) * .5s); }
+/* průchod postupem: zvýraznění přebíhá po krocích dokola */
+.slide.active .travel .step { animation: lit 5s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 1s + .4s); }
+/* PDF se pro AI „rozmaže“ */
+.slide.active .doc.pdf { animation: fog 4s ease 1s forwards; }
+/* dotaz: odpověď po řádcích po dopsání otázky */
+.msg .ln { opacity: 0; transform: translateY(8px); }
+.msg .ln + .ln { margin-top: 10px; }
+.msg.a:has(.ln) { transition: opacity .3s ease; }
+.slide:not(.typed) .msg.a:has(.ln) { opacity: 0; }   /* rámeček odpovědi až po dopsání otázky */
+.slide.typed .msg .ln { animation: lnIn .5s ease forwards; animation-delay: calc(var(--i, 0) * .55s + .2s); }
+.msg.q[data-type].typing::after { content: "▍"; color: var(--accent); animation: blink .8s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+/* infografika: skládání rok po roku, pak se rozsvítí řádek AI */
+.slide.active .tmap .tm-c, .slide.active .tmap .tm-y { animation: rise .4s ease backwards; animation-delay: calc(var(--c, 0) * .09s + var(--r, 0) * .03s); }
+.slide.active .tm-ai .tm-c:not(:empty) { animation: rise .4s ease backwards, aiOn .6s ease backwards; animation-delay: calc(var(--c, 0) * .09s), calc(1.4s + var(--c, 0) * .28s); }
+.slide.active .tm-ai .tm-c i { animation: aiDot .6s ease backwards; animation-delay: calc(1.4s + var(--c, 0) * .28s); }
+/* časová osa s jedoucí tečkou */
+.timeline[data-track] .tl { transition: opacity .4s ease; }
+.timeline[data-track] .tl:not(.past):not(.cur) { opacity: .45; }
+.timeline[data-track] .tl.past::before { border-color: var(--accent); background: var(--accent); }
+.timeline[data-track] .tl.cur::before { opacity: 0; }
+.timeline[data-track] .tl.cur b { color: var(--accent); }
+.tl-fill { position: absolute; left: 0; top: 34px; height: 2px; width: 0; background: var(--accent); z-index: 1; transition: width .7s cubic-bezier(.5,0,.2,1); }
+.tl-dot { position: absolute; top: 24px; left: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); z-index: 2;
+  transition: left .7s cubic-bezier(.5,0,.2,1); animation: pulse-ring 1.8s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .slide *, .slide *::before, .slide *::after { animation: none !important; transition: none !important; }
+  .msg .ln { opacity: 1; transform: none; }
+}
+
+/* QR zástupce */
+.qr { width: 260px; height: 260px; border: 2px dashed var(--border); border-radius: var(--radius); display: grid; place-items: center; text-align: center;
+  font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-400); padding: 20px; background: var(--bg-2); flex: none; }
+.qrrow { display: flex; gap: 60px; align-items: center; }
+
+/* graf: plocha --chrome (vždy tmavá), aby sklo mozku svítilo v obou režimech */
+/* barvy oblastí: na světlém pozadí sytější a tmavší, na tmavém světlejší */
+:root { --node-s: 70%; --node-l: 46%; --link: oklch(0.80 0.006 260); }
+:root[data-theme="dark"] { --node-s: 65%; --node-l: 62%; --link: oklch(0.36 0.006 260); }
+#graphWrap { position: absolute; inset: 0; }
+#graph { width: 100%; height: 100%; display: block; cursor: grab; }
+.gpanel { position: absolute; left: 110px; top: 80px; pointer-events: none; }
+.gpanel h2 { margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.gctrl { position: absolute; left: 110px; bottom: 60px; display: flex; gap: 10px; }
+.gctrl button { font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  padding: 0 20px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink); cursor: pointer; }
+.gctrl button:hover { border-color: var(--ink-2); }
+.gctrl button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.gctrl button { box-shadow: var(--shadow-sm); }
+#gtip { position: absolute; pointer-events: none; background: var(--chrome); border: 1px solid var(--line); padding: 8px 12px; border-radius: 8px;
+  font-size: 18px; color: #fff; display: none; max-width: 520px; }
+
+/* chat ukázka */
+.chat { display: flex; flex-direction: column; gap: 18px; max-width: 1250px; }
+.msg { padding: 24px 30px; border-radius: var(--radius); font-size: 26px; line-height: 1.45; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+.msg.q { background: var(--bg-2); align-self: flex-end; border-left: 4px solid var(--gray-400); }
+.msg.a { background: var(--red-light); border-color: var(--red-mid); border-left: 4px solid var(--accent); }
+.msg code, .mono { font-family: var(--mono); }
+
+/* PDF vs MD */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.vs h3 { font-size: 30px; margin-bottom: 16px; }
+.doc { background: var(--bg-2); border: 1px solid var(--line); border-left: 4px solid var(--gray-400); border-radius: var(--radius); padding: 30px;
+  font-size: 22px; line-height: 1.5; height: 420px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.doc.pdf { filter: blur(.6px); color: var(--ink-2); }
+.doc.md { border-left-color: var(--green); }
+.doc pre { font-family: var(--mono); font-size: 20px; white-space: pre-wrap; color: var(--ink); }
+
+/* UI chrom */
+#progress { position: fixed; left: 0; bottom: 0; height: 4px; background: var(--accent); transition: width .3s; z-index: 5; }
+#counter { position: fixed; right: 18px; bottom: 12px; font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray-400); z-index: 5; font-variant-numeric: tabular-nums; }
+#notes { position: fixed; left: 0; right: 0; bottom: 0; max-height: 34vh; overflow: auto; background: var(--chrome); color: #fff; border-top: 3px solid var(--accent);
+  padding: 18px 28px 28px; font-size: 18px; line-height: 1.5; display: none; z-index: 6; }
+#notes.on { display: block; }
+#notes b.t { font-family: var(--display); letter-spacing: .08em; text-transform: uppercase; color: oklch(0.68 0.17 25); }
+#grid { position: fixed; inset: 0; background: var(--bg); z-index: 10; display: none; overflow: auto; padding: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; align-content: start; }
+#grid.on { display: grid; }
+#grid div { border: 1px solid var(--line); border-left: 4px solid var(--gray-400); border-radius: var(--radius-sm); padding: 14px; font-size: 15px; cursor: pointer; background: var(--bg-2); }
+#grid div:hover { border-left-color: var(--accent); }
+#grid div em { display: block; font-style: normal; font-family: var(--display); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-size: 12px; margin-bottom: 4px; }
+
+/* laserové ukazovátko (klávesa L) — převzato z SLK USE CASES B06; barva záměrně natvrdo, musí být jasně červená v obou režimech */
+html.laser, html.laser * { cursor: none !important; user-select: none; }
+.laser-dot { position: fixed; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, rgba(255,30,30,.95) 0%, rgba(255,30,30,.55) 45%, rgba(255,30,30,0) 75%);
+  box-shadow: 0 0 14px 5px rgba(255,20,20,.55); pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); display: none; }
+.laser-dot.on { display: block; }
+.laser-hint { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); background: var(--chrome); color: #fff; font-family: var(--display); font-size: 14px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; z-index: 99998; display: none; pointer-events: none; }
+.laser-hint.on { display: block; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+<section class="slide" data-part="SD 2026" data-title="Titul">
+  <div class="kicker" style="position:absolute;top:54px;left:110px;margin:0">62. Slévárenské dny · 11. 11. 2026</div>
+  <h1 style="font-size:108px;line-height:1.08">Slévárenské dny v éře AI:<br>od přednášek <span class="acc">k druhému mozku</span></h1>
+  <p class="lead" style="margin-top:56px">Ing. Pavel Šebesta · Slévárna Kuřim, a.s.</p>
+  <p class="phone" style="margin-top:64px;font-size:28px">📱 Připravte si telefon pro načtení QR kódu</p>
+  </section>
+
+<section class="slide" data-title="Za rok">
+  <h1 style="font-size:112px;line-height:1.14">Kolik si z přednášek, které jste tu slyšeli,<br><span class="acc" style="display:block;margin-top:44px">budete pamatovat za rok?</span></h1>
+  </section>
+
+<!-- ============ ÚVOD: AI VE SLÉVÁRENSTVÍ (o tom přednáška není) ============ -->
+
+<section class="slide" data-part="Úvod" data-title="AI ve slévárenství: svět">
+  <div class="kicker">Odbočka: AI ve slévárenství · co se děje ve světě</div>
+  <div class="cards c3 reveal">
+    <div class="card" style="border-left-color:var(--accent)"><div class="n" data-count="-31" data-suffix=" %">−31 %</div><h3>CITIC Dicastal</h3><p>zmetkovitost v marockém závodě: ~40 digitalizací a AI vizuální kontrola</p></div>
+    <div class="card" style="border-left-color:var(--accent)"><div class="n" data-count="-55" data-suffix=" %">−55 %</div><h3>DataProphet + Norican</h3><p>zmetkovitost u výrobců motorových bloků</p></div>
+    <div class="card" style="border-left-color:var(--accent)"><div class="n" data-count="90" data-suffix=" %+">90 %+</div><h3>China Foundry</h3><p>záchyt vad u pískového lití (výzkum)</p></div>
+  </div>
+  <h2 style="margin-top:64px;margin-bottom:0">Zavedeme AI i v naší výrobě?</h2>
+  <div class="src">Šebesta, P.: Adopce AI: Nejsme pozadu sami, ale to není důvod čekat. Slévárenské listy 2026</div>
+  </section>
+
+<section class="slide" data-title="Proč se nehrnout: data">
+  <div class="kicker">Proč se do toho zatím nehrnout</div>
+  <h1 style="font-size:150px">Data</h1>
+  <p class="lead" style="margin-top:24px;max-width:none;white-space:nowrap">Odpovídají data o zmetkovitosti v jednotlivých tavbách (počty, typy vad, míchání šarží na cídírně)?</p>
+  <div class="flow big reveal" style="margin-top:50px">
+    <div class="step"><b>Chaos v datech</b></div><div class="arrow">→</div>
+    <div class="step"><b>Učení AI z nepravdy</b></div><div class="arrow">→</div>
+    <div class="step hot"><b class="acc">Chaos systematicky</b></div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Budujme lidi" style="padding-top:56px;padding-bottom:50px">
+  <div class="kicker" style="margin-bottom:12px">Slévárna Kuřim · 5/2026</div>
+  <h2 style="margin-bottom:24px">Systémy počkají. Budujme lidi.</h2>
+  <div class="flow tight reveal">
+    <div class="step"><span class="ico">📋</span><b>Interní průzkum</b><span>z 80 THP 50 odpovědí, 37 používá AI</span></div><div class="arrow">→</div>
+    <div class="step"><span class="ico">🙋</span><b>Early adopters</b><span>dobrovolníci z kontroly, výroby, obchodu, strojírny a HR</span></div><div class="arrow">→</div>
+    <div class="step"><span class="ico">💡</span><b>Sdílení</b><span>okénko pro AHA momenty na každém setkání</span></div><div class="arrow">→</div>
+    <div class="step hot"><span class="ico">⏱️</span><b>Výsledek</b><span>podklady z ERP k obchodní poradě o 90 % rychleji</span></div>
+  </div>
+  <div class="cards c3 fb reveal">
+    <div class="card"><h3>Kontrola</h3><p>Sleduje s AI novinky v normách ISO, doplňuje auditní otázky a převádí PDF do formátů Office.</p></div>
+    <div class="card"><h3>Obchod</h3><p>Dispečink, tabulky, e-maily. Nejvíc ji překvapily hodiny němčiny na míru.</p></div>
+    <div class="card"><h3>Výroba</h3><p>Poskládal s AI turnusy a směny pro nové pracovníky na cídírně a ruční formovně. Ušetřilo to spoustu hodin.</p></div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Hlasování">
+  <div class="kicker">Teď vy</div>
+  <div class="qrrow">
+    <div class="qr">QR na hlasování</div>
+    <div>
+      <h2>Tři otázky, minuta času</h2>
+      <div class="qlist">
+        <div><b>1</b>Používáte AI?</div>
+        <div><b>2</b>Co s AI děláte?</div>
+        <div><b>3</b>Máte placený nástroj?</div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Základní nastavení" data-fx="1">
+  <div class="kicker">Základní nastavení</div>
+  <div class="cards c3 reveal">
+    <div class="card" style="position:relative"><div class="stamp">Ne google.cz</div><h3>Nástroj</h3><p>Ten, který vám dává smysl. Copilot v Microsoftu, Gemini u Googlu, ChatGPT, když vás už zná.</p></div>
+    <div class="card"><h3>Model</h3><p>Pracuje model, ne aplikace. Placená verze od ~200 Kč měsíčně: lepší modely, režim přemýšlení, méně halucinací.</p></div>
+    <div class="card" style="border-left-color:var(--accent)"><h3 class="acc">Kontext</h3><p>Zapnutá paměť a osobní kontext, se kterým AI začíná každou konverzaci.</p></div>
+  </div>
+  <p class="lead" style="margin-top:50px"><b style="color:var(--ink)">Tři návyky:</b> AI-first · sledujte, co děláte opakovaně · hotové je lepší než dokonalé</p>
+  </section>
+
+<section class="slide" data-title="AI nás musí znát">
+  <div class="kicker">AI nás musí znát</div>
+  <div class="chat">
+    <div class="msg q">Na základě toho, co o mně víš, navrhni tři konkrétní věci, kde mi může AI pomoct.</div>
+    <div class="msg a"><b>Bez kontextu:</b> univerzální rady, prakticky k ničemu.<br><b>S osobním kontextem:</b> vaše projekty, vaše procesy, vaše opakované úkoly.</div>
+  </div>
+  <div class="qrrow" style="margin-top:44px"><div class="qr" style="width:200px;height:200px">QR: prompt na osobní kontext</div>
+    <p class="lead">Zadání, se kterým AI vede rozhovor a sestaví váš osobní kontext.<br><span class="mono small">slevarenskelisty-prompt.vercel.app</span></p></div>
+  </section>
+
+<section class="slide" data-title="Přechod">
+  <p class="lead" style="font-size:40px;color:var(--ink-2)">O tom ale dnešní přednáška není.</p>
+  <h1 style="margin-top:28px">AI už může znát vás.<br><span class="acc">Zná i to, co jste tady slyšeli?</span></h1>
+  <p class="lead" style="margin-top:40px">AI umí hledat na internetu. Ve vašich vlastních znalostech zatím ne.</p>
+  </section>
+
+<!-- ============ HLAVNÍ ČÁST: SLÉVÁRENSKÉ DNY A DRUHÝ MOZEK ============ -->
+
+<section class="slide" data-part="Druhý mozek" data-title="Kde končí znalosti">
+  <div class="kicker">Jak tyto, a nejen tyto, informace uchovat?</div>
+  <h2>Kde dnes končí znalosti z konference</h2>
+  <div class="cards c4 reveal forget">
+    <div class="card"><span class="ico">📓</span><h3>Blok</h3><p>v šuplíku, rukopis, bez souvislostí</p></div>
+    <div class="card"><span class="ico">📄</span><h3>Sborník PDF</h3><p>abstrakty, ke kterým se nikdo nevrátí</p></div>
+    <div class="card"><span class="ico">📱</span><h3>Fotky slidů</h3><p>stovky obrázků v galerii mobilu</p></div>
+    <div class="card"><span class="ico">🧠</span><h3>Hlava</h3><p>dokud nepřijde další konference</p></div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Historie">
+  <div class="kicker">Není to nový nápad</div>
+  <h2>Od kartotéky k druhému mozku</h2>
+  <div class="timeline" data-track><div class="tl-fill"></div><div class="tl-dot"></div>
+    <div class="tl"><div class="y">19. stol.</div><b>Kartotéka</b><p>knihovní katalogy: jedna myšlenka, jedna karta</p></div>
+    <div class="tl zoomable" data-z="zk"><div class="y">1952–1997</div><b>Zettelkasten</b><p>Niklas Luhmann: ~90 000 propojených kartiček</p>
+      <template class="zd">
+        <div class="kicker">Niklas Luhmann · 1952–1997</div>
+        <h2>Zettelkasten</h2>
+        <div class="zgrid">
+          <ul class="zlist">
+            <li>~90 000 kartiček, na každé jedna myšlenka</li>
+            <li>Karty nejsou řazené podle témat. Mají číslo a odkazují na sebe: z myšlenky se větví další.</li>
+            <li>Luhmann o kartotéce mluvil jako o partnerovi, se kterým vede rozhovor</li>
+            <li>Výsledek: kolem 70 knih a stovky článků</li>
+            <li>Dnes je celá digitalizovaná (Niklas Luhmann-Archiv, Univerzita Bielefeld)</li>
+          </ul>
+          <div class="zstage">
+            <figure class="zphoto">
+              <img src="img/zk-medium.jpg" alt="Niklas Luhmann u psacího stolu ve své pracovně">
+              <figcaption>Niklas Luhmann · zdroj fotky: medium.com</figcaption>
+            </figure>
+            <figure class="zphoto">
+              <img src="img/zk-dmathieu.jpg" alt="Dřevěná kartotéka se zásuvkami ve vitríně">
+              <figcaption>Zettelkasten ve vitríně · zdroj fotky: dmathieu.com</figcaption>
+            </figure>
+            <figure class="zphoto tilt">
+              <img src="img/luhmann-zk-2-9-8.jpg" alt="Ručně psaná kartička Niklase Luhmanna ZK II 9/8: Zettelkasten jako kybernetický systém">
+              <figcaption>Kartička 9/8 „Zettelkasten als kybernetisches System“ · Niklas Luhmann-Archiv, Univerzita Bielefeld, CC BY-NC-SA 4.0</figcaption>
+            </figure>
+            <div class="zcards">
+              <div class="zc"><i>1</i>Myšlenka</div>
+              <div class="zc"><i>1a</i>navazuje na 1</div>
+              <div class="zc"><i>1a1</i>rozvíjí 1a</div>
+              <div class="zc"><i>2</i>nová myšlenka<small>→ odkaz na 1a1</small></div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+    <div class="tl zoomable" data-z="ahrens"><div class="y">2017</div><b>Chytré poznámky</b><p>Sönke Ahrens: propojovat, ne jen ukládat</p>
+      <template class="zd">
+        <div class="kicker">Sönke Ahrens · 2017</div>
+        <h2>Jak si dělat chytré poznámky</h2>
+        <div class="ahr">
+          <div>
+            <div class="flow" style="margin-bottom:26px">
+              <div class="step"><b>Letmé</b><span>rychlý záznam nápadu, po zpracování vyhodit</span></div><div class="arrow">→</div>
+              <div class="step"><b>Biblio</b><span>ze zdroje vlastními slovy, stručně</span></div><div class="arrow">→</div>
+              <div class="step hot"><b>Permanentní</b><span>jedna myšlenka, celé věty, se zdrojem</span></div>
+            </div>
+            <ul class="zlist">
+              <li><b>Kde vznikají vazby:</b> při zakládání permanentní poznámky. Zařadíte ji za související, odkážete na ni a z ní a přidáte ji do rejstříku.</li>
+              <li><b>Ptáte se:</b> odporuje tomu, co už mám? Doplňuje to? Plyne z toho nová otázka?</li>
+              <li><b>Co doporučuje:</b> papír a tužka, správce citací (Zotero), kartotéka (Obsidian, Zettlr), textový editor. Víc není třeba.</li>
+            </ul>
+          </div>
+          <figure class="zphoto"><img src="img/ahrens-kniha.png" alt="Obálka knihy Sönke Ahrens: Jak si dělat chytré poznámky" style="box-shadow:none"><figcaption>Obálka: Jan Melvil Publishing, melvil.cz</figcaption></figure>
+        </div>
+      </template>
+    </div>
+    <div class="tl zoomable" data-z="obsidian"><div class="y">2020</div><b>Obsidian</b><p>propojené .md soubory, graf poznámek</p>
+      <template class="zd">
+        <div class="kicker">2020</div>
+        <h2>Obsidian</h2>
+        <div class="zgrid">
+          <ul class="zlist">
+            <li>Poznámky jsou obyčejné textové soubory .md na vašem disku</li>
+            <li>Odkazy mezi poznámkami a zpětné odkazy: kartotéka bez papíru</li>
+            <li>Graf poznámek ukáže souvislosti, které byste jinak neviděli</li>
+            <li>Funguje offline, data patří vám, ne aplikaci</li>
+            <li>Můj mozek: Obsidian a AI pracují nad stejnými soubory</li>
+          </ul>
+          <figure class="zphoto"><img src="img/obsidian-graf.png" alt="Můj Obsidian: seznam složek a graf poznámek"><figcaption>Můj Obsidian: složky a graf poznámek</figcaption></figure>
+        </div>
+      </template>
+    </div>
+    <div class="tl now zoomable" data-z="ai"><div class="y">dnes</div><b>Druhý mozek s AI</b><p>AI čte, třídí, propojuje a odpovídá</p>
+      <template class="zd">
+        <div class="kicker">Dnes</div>
+        <h2>Nový není princip.</h2>
+        <h1 class="acc" style="font-size:80px">Nové je, že poznámky<br>umí číst i vaše AI.</h1>
+        <p class="lead" style="margin-top:50px">Obyčejné textové soubory (.md): čte je člověk, čte je AI, nepatří žádné firmě a přežijí jakoukoli aplikaci.</p>
+      </template>
+    </div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Můj mozek — graf" id="graphSlide" style="padding:0">
+  <div id="graphWrap"><canvas id="graph"></canvas></div>
+  <div class="gpanel">
+    <div class="kicker">Můj druhý mozek</div>
+    <h2 id="gcount">— souborů</h2>
+    <p class="small" id="gphase"></p>
+  </div>
+  <div class="gctrl">
+    <button data-g="ai-adopce-a-firma">Adopce</button>
+    <button data-g="druhy-mozek-pact">Druhý mozek</button>
+    <button data-g="prompty-a-sablony">Prompty</button>
+    <button id="greplay">▶ Znovu</button>
+    <button id="gnew">+ Slévárenské dny 10. 11.</button>
+  </div>
+  <div id="gtip"></div>
+  </section>
+
+<section class="slide" data-title="Jak to vzniká">
+  <div class="kicker">1. den 62. Slévárenských dní</div>
+  <h2>Od přednášky do mozku</h2>
+  <div class="flow travel">
+    <div class="step"><span class="ico">🎙️</span><b>Nahrávka/fotka</b><span>diktafon nebo mobil v sále</span></div><div class="arrow">→</div>
+    <div class="step"><span class="ico">📝</span><b>Přepis</b><span>automaticky, česky</span></div><div class="arrow">→</div>
+    <div class="step"><span class="ico">📄</span><b>.md soubor</b><span>shrnutí, klíčová čísla, citace</span></div><div class="arrow">→</div>
+    <div class="step"><span class="ico">🗺️</span><b>Zařazení</b><span>do tematické mapy, propojení</span></div><div class="arrow">→</div>
+    <div class="step hot"><span class="ico">💬</span><b>Otázky</b><span>co z toho je pro mě?</span></div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Témata ročníků">
+  <div class="kicker">Slévárenské dny 2011–2025 · 479 příspěvků v mozku</div>
+  <h2 style="margin-bottom:12px">AI: z úvahy na plenárku za šest let</h2>
+  <div class="tmap">
+    <div class="tm-row tm-head"><div></div><div class="tm-y zk" data-y="2011" data-k="all" role="button" tabindex="0">2011<small>47</small></div><div class="tm-y zk" data-y="2012" data-k="all" role="button" tabindex="0">2012<small>62</small></div><div class="tm-y zk" data-y="2013" data-k="all" role="button" tabindex="0">2013<small>54</small></div><div class="tm-y zk" data-y="2014" data-k="all" role="button" tabindex="0">2014<small>47</small></div><div class="tm-y zk" data-y="2015" data-k="all" role="button" tabindex="0">2015<small>46</small></div><div class="tm-y zk tm-gap" data-y="2019" data-k="all" role="button" tabindex="0">2019<small>44</small></div><div class="tm-y zk" data-y="2021" data-k="all" role="button" tabindex="0">2021<small>28</small></div><div class="tm-y zk" data-y="2022" data-k="all" role="button" tabindex="0">2022<small>44</small></div><div class="tm-y zk" data-y="2023" data-k="all" role="button" tabindex="0">2023<small>39</small></div><div class="tm-y zk" data-y="2024" data-k="all" role="button" tabindex="0">2024<small>37</small></div><div class="tm-y zk" data-y="2025" data-k="all" role="button" tabindex="0">2025<small>31</small></div></div>
+    <div class="tm-row tm-ai"><div class="tm-name">Digitalizace a AI</div><div class="tm-c"></div><div class="tm-c"></div><div class="tm-c zk" data-y="2013" data-k="dig" role="button" tabindex="0"><i></i><span>informační systém KARAT</span></div><div class="tm-c zk" data-y="2014" data-k="dig" role="button" tabindex="0"><i></i><span>informační systémy, APS</span></div><div class="tm-c zk" data-y="2015" data-k="dig" role="button" tabindex="0"><i></i><span>nákladový inf. systém</span></div><div class="tm-c zk tm-gap" data-y="2019" data-k="dig" role="button" tabindex="0"><i></i><span>Průmysl 4.0, 1. zmínka o AI</span></div><div class="tm-c"></div><div class="tm-c zk" data-y="2022" data-k="dig" role="button" tabindex="0"><i></i><span>roboty, Průmysl 4.0</span></div><div class="tm-c zk" data-y="2023" data-k="dig" role="button" tabindex="0"><i></i><span>automatizace odlévání</span></div><div class="tm-c zk" data-y="2024" data-k="dig" role="button" tabindex="0"><i></i><span>MES, data v reálném čase</span></div><div class="tm-c zk" data-y="2025" data-k="dig" role="button" tabindex="0"><i></i><span>1. plenárka o AI</span></div></div>
+    <div class="tm-row"><div class="tm-name">Lidé a řízení</div><div class="tm-c zk" data-y="2011" data-k="lid" role="button" tabindex="0"><i></i><span>Lean Six Sigma</span></div><div class="tm-c"></div><div class="tm-c"></div><div class="tm-c zk" data-y="2014" data-k="lid" role="button" tabindex="0"><i></i><span>motivace</span></div><div class="tm-c zk" data-y="2015" data-k="lid" role="button" tabindex="0"><i></i><span>štíhlá výroba</span></div><div class="tm-c zk tm-gap" data-y="2019" data-k="lid" role="button" tabindex="0"><i></i><span>lidé a krize</span></div><div class="tm-c zk" data-y="2021" data-k="lid" role="button" tabindex="0"><i></i><span>spokojenost zaměstnanců</span></div><div class="tm-c zk" data-y="2022" data-k="lid" role="button" tabindex="0"><i></i><span>produktivita, kultura</span></div><div class="tm-c zk" data-y="2023" data-k="lid" role="button" tabindex="0"><i></i><span>procesní excelence</span></div><div class="tm-c"></div><div class="tm-c"></div></div>
+    <div class="tm-row"><div class="tm-name">Ekonomika a energie</div><div class="tm-c zk" data-y="2011" data-k="eko" role="button" tabindex="0"><i></i><span>krize 2009, nákladový model</span></div><div class="tm-c zk" data-y="2012" data-k="eko" role="button" tabindex="0"><i></i><span>nákladovost, energie</span></div><div class="tm-c zk" data-y="2013" data-k="eko" role="button" tabindex="0"><i></i><span>nákladovost</span></div><div class="tm-c zk" data-y="2014" data-k="eko" role="button" tabindex="0"><i></i><span>ekonomické prostředí</span></div><div class="tm-c zk" data-y="2015" data-k="eko" role="button" tabindex="0"><i></i><span>nákladovost</span></div><div class="tm-c zk tm-gap" data-y="2019" data-k="eko" role="button" tabindex="0"><i></i><span>projekt XIX</span></div><div class="tm-c zk" data-y="2021" data-k="eko" role="button" tabindex="0"><i></i><span>ztráty z pandemie</span></div><div class="tm-c zk" data-y="2022" data-k="eko" role="button" tabindex="0"><i></i><span>energetická krize</span></div><div class="tm-c zk" data-y="2023" data-k="eko" role="button" tabindex="0"><i></i><span>světová konkurence</span></div><div class="tm-c zk" data-y="2024" data-k="eko" role="button" tabindex="0"><i></i><span>mizející zakázky</span></div><div class="tm-c zk" data-y="2025" data-k="eko" role="button" tabindex="0"><i></i><span>WFO summit</span></div></div>
+    <div class="tm-row"><div class="tm-name">Odpady a ESG</div><div class="tm-c zk" data-y="2011" data-k="odp" role="button" tabindex="0"><i></i><span>odpadové hospodářství</span></div><div class="tm-c zk" data-y="2012" data-k="odp" role="button" tabindex="0"><i></i><span>ekologická újma</span></div><div class="tm-c zk" data-y="2013" data-k="odp" role="button" tabindex="0"><i></i><span>zákon o odpadech</span></div><div class="tm-c zk" data-y="2014" data-k="odp" role="button" tabindex="0"><i></i><span>právní normy</span></div><div class="tm-c zk" data-y="2015" data-k="odp" role="button" tabindex="0"><i></i><span>zákon o odpadech</span></div><div class="tm-c zk tm-gap" data-y="2019" data-k="odp" role="button" tabindex="0"><i></i><span>cirkulární ekonomika</span></div><div class="tm-c zk" data-y="2021" data-k="odp" role="button" tabindex="0"><i></i><span>ekologické škody</span></div><div class="tm-c zk" data-y="2022" data-k="odp" role="button" tabindex="0"><i></i><span>skládky, odpady</span></div><div class="tm-c zk" data-y="2023" data-k="odp" role="button" tabindex="0"><i></i><span>ESG</span></div><div class="tm-c zk" data-y="2024" data-k="odp" role="button" tabindex="0"><i></i><span>CBAM, recyklace</span></div><div class="tm-c zk" data-y="2025" data-k="odp" role="button" tabindex="0"><i></i><span>recyklace odpadů</span></div></div>
+    <div class="tm-row"><div class="tm-name">Formovací materiály</div><div class="tm-c zk" data-y="2011" data-k="form" role="button" tabindex="0"><i></i><span>preventivní řízení směsi</span></div><div class="tm-c zk" data-y="2012" data-k="form" role="button" tabindex="0"><i></i><span>jednotná směs v Kuřimi</span></div><div class="tm-c zk" data-y="2013" data-k="form" role="button" tabindex="0"><i></i><span>jednotné směsi</span></div><div class="tm-c zk" data-y="2014" data-k="form" role="button" tabindex="0"><i></i><span>bentonitové směsi</span></div><div class="tm-c zk" data-y="2015" data-k="form" role="button" tabindex="0"><i></i><span>bentonit bez uhlíku</span></div><div class="tm-c zk tm-gap" data-y="2019" data-k="form" role="button" tabindex="0"><i></i><span>parametry směsí</span></div><div class="tm-c zk" data-y="2021" data-k="form" role="button" tabindex="0"><i></i><span>anorganická pojiva</span></div><div class="tm-c zk" data-y="2022" data-k="form" role="button" tabindex="0"><i></i><span>Geopol</span></div><div class="tm-c zk" data-y="2023" data-k="form" role="button" tabindex="0"><i></i><span>60 let KOFOLA</span></div><div class="tm-c zk" data-y="2024" data-k="form" role="button" tabindex="0"><i></i><span>Geopol</span></div><div class="tm-c zk" data-y="2025" data-k="form" role="button" tabindex="0"><i></i><span>furan → alkyd</span></div></div>
+    <div class="tm-row tm-more"><div class="tm-name">Dalších 8 oblastí</div><div class="tm-c tm-wide"><span>litiny · metalurgie oceli · neželezné kovy · přesné lití · technologie lití (vtoky, nálitky, filtrace) · aditivní výroba · tavení a pece · tryskání a apretace · <u>klik na rok je ukáže</u></span></div></div>
+  </div>
+  <div class="src">Slovo v buňce je příklad z ročníku, ne jediná přednáška. Klik na buňku ukáže všechny názvy příspěvků k tématu, klik na rok všechny z ročníku. Pod rokem počet příspěvků (z názvů, ± pár kusů). 2016–2018 chybí, 2020 se nekonalo.</div>
+  </section>
+
+<section class="slide" data-title="Zpět k otázce">
+  <div class="kicker">Zpět k první otázce</div>
+  <h1>Jak máte zpracované informace<br><span class="acc">z těchto přednášek?</span></h1>
+  </section>
+
+<section class="slide" data-title="Jít dál">
+  <div class="kicker">Můžeme jít dál</div>
+  <h1 style="font-size:78px;line-height:1.05">Není čas, aby i sborníky a odborné články vycházely v podobě, <span class="acc">se kterou umí pracovat AI?</span></h1>
+  <div class="cards c3 reveal" style="margin-top:56px">
+    <div class="card"><h3>Přednášející</h3><p>sdílet přednášku ke stažení pro AI</p></div>
+    <div class="card"><h3>Časopisy</h3><p>přepis článku, včetně popisu tabulek a grafů, do textové podoby</p></div>
+    <div class="card" style="border-left-color:var(--accent)"><h3>Vy</h3><p>doplňování svých znalostních systémů „druhých mozků“</p></div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Materiály">
+  <div class="qrrow" style="gap:80px">
+    <div class="qr" style="width:340px;height:340px">QR: materiály ke stažení</div>
+    <div>
+      <div class="kicker">Jeden QR kód, všechno na jednom místě</div>
+      <h2 style="margin-bottom:24px">Nahrajte si to do své AI a ptejte se</h2>
+      <ul class="zlist">
+        <li>Článek ze Slévárenských listů pro AI</li>
+        <li>Přepis této prezentace</li>
+        <li>Přepis mé přednášky (do pár dní)</li>
+        <li>Prompt pro vaši AI: sestaví váš osobní kontext</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Můj mozek naživo">
+  <div class="kicker">Živá ukázka</div>
+  <h2>Zeptejme se mozku</h2>
+  <div class="chat"><div class="msg q">Která témata se na Slévárenských dnech v posledních letech opakují, co je nového a co z toho je použitelné pro Slévárnu Kuřim?</div></div>
+  </section>
+
+<section class="slide" data-title="Budujte lidi" data-fx="1" style="padding-top:50px;padding-bottom:46px">
+  <div class="kicker" style="margin-bottom:10px">A co dál?</div>
+  <h2 style="margin-bottom:12px">Nebudujte systémy. <span class="acc">Budujte lidi.</span></h2>
+  <p class="lead" style="max-width:none;font-size:27px">Lidé se naučí pracovat s AI a začnou přemýšlet, jak ji využít v práci.<br><b style="color:var(--ink)">Může být druhý mozek přínosem pro slévárnu?</b></p>
+  <div class="fstage">
+    <div class="fcol">
+      <div class="fdoc" style="--i:0">Směrnice</div>
+      <div class="fdoc" style="--i:1">Statutární dokumentace</div>
+      <div class="fdoc" style="--i:2">ISO dokumentace</div>
+      <div class="fdoc" style="--i:3">Výrobní postupy</div>
+    </div>
+    <div class="fbrain"><canvas id="brainStill" width="1120" height="860"></canvas></div>
+    <div class="fcol r">
+      <div class="fdoc" style="--i:4">Popisy procesů</div>
+      <div class="fdoc" style="--i:5">Opatření proti zmetkovitosti</div>
+      <div class="fdoc" style="--i:6">Návody k zařízením</div>
+      <div class="fdoc" style="--i:7">Bezpečnostní listy materiálů</div>
+    </div>
+  </div>
+  </section>
+
+<section class="slide" data-title="Děkuji">
+  <div class="qrrow" style="gap:90px">
+    <div class="qr" style="width:380px;height:380px">QR: materiály ke stažení</div>
+    <div>
+      <h1 style="font-size:104px;margin-bottom:30px">Děkuji za pozornost</h1>
+      <p class="lead">Materiály ke stažení: článek, přepisy a prompt pro vaši AI.</p>
+      <p class="lead" style="margin-top:30px;color:var(--ink)">Pavel Šebesta · Slévárna Kuřim</p>
+    </div>
+  </div>
+  </section>
+</div>
+
+<div id="progress"></div>
+<div id="counter"></div>
+<div id="notes"></div>
+<div id="grid"></div>
+
+<canvas id="laser-trail" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:99998;display:none"></canvas>
+<div class="laser-dot" id="laser-dot"></div>
+<div class="laser-hint" id="laser-hint">🔴 Laser aktivní — L pro vypnutí</div>
+<script src="graph-data.js"></script>
+<script>
+// ---------- navigace ----------
+const deck = document.getElementById('deck');
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0, step = 0;
+function fit() {
+  const s = Math.min(innerWidth / 1600, innerHeight / 900);
+  deck.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+function partOf(i) { for (let j = i; j >= 0; j--) if (slides[j].dataset.part) return slides[j].dataset.part; return ''; }
+function show(i) {
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  step = 0; slides.forEach(zoomClose); slides[cur].classList.remove('fx1');
+  slideAnims(slides[cur]);
+  slides.forEach((s, k) => s.classList.toggle('active', k === cur));
+  document.getElementById('progress').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('counter').textContent = `${partOf(cur)} · ${cur + 1}/${slides.length}`;
+  const n = slides[cur].querySelector('aside.notes');
+  document.getElementById('notes').innerHTML = `<b class="t">${slides[cur].dataset.title}</b> — ` + (n ? n.innerHTML : '');
+  history.replaceState(null, '', '#' + (cur + 1));
+  animateBars(slides[cur]);
+  if (slides[cur].id === 'graphSlide') Graph.start(); else Graph.stop();
+}
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+  else if (['ArrowLeft', 'PageUp'].includes(e.key)) prev();
+  else if (e.key === 'Escape' && isOpen(slides[cur])) { zoomClose(slides[cur]); return; }
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(slides.length - 1);
+  else if ((e.key === 'e' || e.key === 'E') && slides[cur].id === 'graphSlide') Graph.skip();
+  else if (e.key === 'n' || e.key === 'N') document.getElementById('notes').classList.toggle('on');
+  else if (e.key === 't' || e.key === 'T') {
+    const r = document.documentElement; r.dataset.theme = r.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('theme', r.dataset.theme); } catch (_) {}
+  }
+  else if (e.key === 'f' || e.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  else if (e.key === 'g' || e.key === 'G' || e.key === 'Escape') document.getElementById('grid').classList.toggle('on', e.key !== 'Escape' && !document.getElementById('grid').classList.contains('on'));
+});
+let touch0 = null;
+addEventListener('touchstart', e => { touch0 = e.changedTouches[0]; }, { passive: true });
+addEventListener('touchend', e => {
+  if (!touch0) return;
+  const dx = e.changedTouches[0].clientX - touch0.clientX, dy = e.changedTouches[0].clientY - touch0.clientY; touch0 = null;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); e.preventDefault(); return; }
+  if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && !e.target.closest('a, button, .zk, .zoomable, .zoomcard, #grid')) { next(); e.preventDefault(); }
+}, { passive: false });
+try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (_) {}
+
+// ---------- zoom detailů ----------
+function zoomCard(slide) {
+  let c = slide.querySelector('.zoomcard');
+  if (!c) { c = document.createElement('div'); c.className = 'zoomcard'; slide.appendChild(c); c.addEventListener('click', () => {
+    // klik: u detailu s více pohledy nejdřív další pohled, pak zavřít
+    if (!zViewNext(c)) zoomClose(slide);
+  }); }
+  return c;
+}
+// detail s více pohledy (.zstage): po 5 s se střídají samy, šipka nebo klik posune hned
+let zTimer = 0;
+const zViews = c => { const s = c.querySelector('.zstage'); return s ? [...s.children] : []; };
+function zView(c, k) {
+  const v = zViews(c); c.dataset.view = k; v.forEach((x, i) => x.classList.toggle('on', i === k));
+  clearTimeout(zTimer);
+  if (k < v.length - 1) zTimer = setTimeout(() => { if (c.classList.contains('open')) zView(c, k + 1); }, 5000);
+}
+function zViewNext(c) { const k = +c.dataset.view || 0; if (k < zViews(c).length - 1) { zView(c, k + 1); return true; } return false; }
+function zoomOpen(slide, z) {
+  const tl = slide.querySelector('.zoomable[data-z="' + z + '"]'), c = zoomCard(slide);
+  c.innerHTML = tl.querySelector('.zd').innerHTML; c.dataset.z = z; zView(c, 0);
+  // karta „vyroste“ z místa položky (souřadnice v plátně 1600×900, karta má odsazení 60/70 px)
+  const sr = slide.getBoundingClientRect(), tr = tl.getBoundingClientRect(), k = sr.width / 1600;
+  c.style.transformOrigin = ((tr.left - sr.left + tr.width / 2) / k - 70) + 'px ' + ((tr.top - sr.top + tr.height / 2) / k - 60) + 'px';
+  slide.querySelectorAll('.zoomable').forEach(x => x.classList.toggle('on', x === tl));
+  requestAnimationFrame(() => requestAnimationFrame(() => c.classList.add('open')));
+}
+function zoomClose(slide) {
+  const c = slide.querySelector('.zoomcard'); if (c) { c.classList.remove('open'); clearTimeout(zTimer); }
+  slide.querySelectorAll('.zoomable').forEach(x => x.classList.remove('on'));
+}
+function isOpen(slide) { const c = slide.querySelector('.zoomcard'); return !!c && c.classList.contains('open'); }
+// ---------- animace slidů ----------
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let typeTimer = 0;
+document.querySelectorAll('.reveal, .travel').forEach(el => [...el.querySelectorAll(':scope > *, .step')].forEach((c, i) => c.style.setProperty('--i', i)));
+document.querySelectorAll('.travel').forEach(el => el.querySelectorAll('.step').forEach((c, i) => c.style.setProperty('--i', i)));
+document.querySelectorAll('.msg.a').forEach(el => el.querySelectorAll('.ln').forEach((c, i) => c.style.setProperty('--i', i)));
+document.querySelectorAll('.tmap .tm-row').forEach((row, ri) => [...row.children].slice(1).forEach((c, ci) => { c.style.setProperty('--c', ci); c.style.setProperty('--r', ri); }));
+function countUp(el) {
+  const to = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), D = 1100;
+  const fmt = v => (v < 0 ? '−' : '') + Math.abs(Math.round(v)) + suf;
+  if (REDUCED) { el.textContent = fmt(to); return; }
+  (function tick() {
+    const p = Math.min(1, (performance.now() - t0) / D), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(to * e); if (p < 1) requestAnimationFrame(tick);
+  })();
+}
+function typeIn(slide) {
+  const q = slide.querySelector('[data-type]'); if (!q) return;
+  clearInterval(typeTimer); slide.classList.remove('typed');
+  const full = q.dataset.full || (q.dataset.full = q.textContent.trim());
+  if (REDUCED) { q.textContent = full; slide.classList.add('typed'); return; }
+  let i = 0; q.textContent = ''; q.classList.add('typing');
+  typeTimer = setInterval(() => {
+    q.textContent = full.slice(0, i += 2);
+    if (i >= full.length) { clearInterval(typeTimer); q.classList.remove('typing'); slide.classList.add('typed'); }
+  }, 22);
+}
+function tlMove(slide, k) {
+  const tl = slide.querySelector('.timeline[data-track]'); if (!tl) return;
+  const items = [...tl.querySelectorAll('.tl')], it = items[k];
+  tl.querySelector('.tl-dot').style.left = it.offsetLeft + 'px';
+  tl.querySelector('.tl-fill').style.width = (it.offsetLeft + 11) + 'px';
+  items.forEach((x, i) => { x.classList.toggle('past', i < k); x.classList.toggle('cur', i === k); });
+  tl.dataset.pos = k;
+}
+// kroky časové osy: dojezd na položku (+ otevření detailu), u detailu ještě zavření
+function tlSteps(slide) {
+  const st = [];
+  slide.querySelectorAll('.timeline[data-track] .tl').forEach((it, k) => {
+    if (!k) return;
+    st.push({ move: k, open: it.dataset.z });
+    if (it.dataset.z) st.push({ close: true });
+  });
+  return st;
+}
+function slideAnims(slide) {
+  slide.querySelectorAll('[data-count]').forEach(countUp);
+  typeIn(slide);
+  if (slide.querySelector('.timeline[data-track]')) tlMove(slide, 0);
+}
+function next() {
+  const sl = slides[cur], zs = (sl.dataset.zooms || '').split(',').filter(Boolean);
+  if (sl.dataset.fx && !sl.classList.contains('fx1')) { sl.classList.add('fx1'); return; }   // krok na slidu (razítko, dokumenty do mozku)
+  if (sl.querySelector('.timeline[data-track]')) {
+    if (isOpen(sl) && zViewNext(zoomCard(sl))) return;
+    const st = tlSteps(sl);
+    if (step < st.length) {
+      const x = st[step++];
+      if (x.close) zoomClose(sl);
+      else { tlMove(sl, x.move); if (x.open) setTimeout(() => { if (slides[cur] === sl) zoomOpen(sl, x.open); }, 650); }
+      return;
+    }
+    show(cur + 1); return;
+  }
+  if (step < zs.length * 2) { step % 2 === 0 ? zoomOpen(sl, zs[step / 2]) : zoomClose(sl); step++; return; }
+  show(cur + 1);
+}
+function prev() {
+  const sl = slides[cur];
+  const zc = sl.querySelector('.zoomcard');
+  if (sl.classList.contains('fx1')) { sl.classList.remove('fx1'); return; }
+  if (isOpen(sl) && +zc.dataset.view > 0) { zView(zc, +zc.dataset.view - 1); return; }   // o pohled zpět
+  if (isOpen(sl)) { zoomClose(sl); step = Math.max(0, step - 1); return; }
+  show(cur - 1);
+}
+document.querySelectorAll('.zoomable').forEach(tl => tl.addEventListener('click', () => {
+  const sl = tl.closest('.slide');
+  tlMove(sl, [...sl.querySelectorAll('.timeline .tl')].indexOf(tl));
+  if (isOpen(sl) && zoomCard(sl).dataset.z === tl.dataset.z) zoomClose(sl); else zoomOpen(sl, tl.dataset.z);
+}));
+
+
+
+
+
+
+
+
+
+// TM-JS: klik na buňku / rok v infografice Témata ročníků otevře názvy příspěvků
+const TM = {"2011":{"dig":[],"odp":["Důležité skutečnosti v odpadovém hospodářství pro obecného původce"],"form":["Jak stanovit skutečné náklady na přípravu formovací směsi","Preventivní řízení jednotné formovací směsi","Současný stav vývoje a použití ST-směsí na bázi alkalických fenolických rezolů","Olivínový slévárenský písek","Užití andalusitu jako slévárenského ostřiva","Cold-Box jádra a jejich nátěry v nízkotlakém lití"],"lid":["Lean Six Sigma: jak zvýšit hodnotu firmy kvalitou, zrychlením procesů a odstraněním plýtvání"],"eko":["Problémy českých sléváren po odeznění světové finanční a hospodářské krize","Zkušenosti s vytvářením ekonomického povědomí ve Slévárnách Třinec","Jak ovlivňují taviči a mistři náklady tekutého kovu u tavicích pecí","Hledání závislostí technologických a nákladových charakteristik při tavení oceli na EOP","Nákladové hodnocení výrobní fáze apretace odlitků","Zkušenosti slévárny zahraničního vlastníka v době krize a následného oživení","Problémy využívání grantových dotací"],"jine":["Některé přínosy z řešení grantového úkolu","Zkušenosti s provozem nové 3t indukční pece a porovnání s pecí obloukovou","Výrobní praxe na intenzifikované EOP","Zkušenosti s provozováním modernizované EOP","Možnosti náhrady kazivce na EOP pomocí hlinitanových strusek","Možnosti výroby a hodnocení ocelí s nízkou koncentrací kyslíku","Sekundární metalurgie LF/VD/VOD v pánvi 6–12 t","Vliv dezoxidace na vlastnosti oceli odlité do masivních odlitků","Degradace vlastností ocelí během tuhnutí masivních odlitků","Aplikace izolace jako cesta náhrady podnálitkových kapes","Video validace simulace proudění ve vtokových soustavách ocelových odlitků","Filtrace a její implementace v praxi","Kam kráčíš simulace?","Porovnání mechanických vlastností odlitku planetového kola a zkušebního bloku G42CrMo4V","Výroba ocelových odlitků střižných nástrojů pro automobilový průmysl","Moderní přístup k nálitkování, cesta k úspěchu","Možnosti uplatnění moderních metod při výrobě prototypových odlitků","Surové železo pro výrobu jakostních odlitků z LLG","Studium vzniku bodlin v litinových odlitcích","Tvorba a eliminace sekundární strusky u modifikovaných litin","Využití termické analýzy k predikci metalurgické kvality ICDP litin","Podmínky rozpouštění hořčíkového modifikátoru při metodě FLOTRET","Zpevnění licí kůry tryskáním u LKG","Výroba litinových odlitků ve slévárně přesného lití IEG","Novinky ve výrobním programu LAC","Vměstky ve slitinách Al a hodnocení čistoty kovu","Vliv odplynění taveniny na vnitřní kvalitu odlitků","Skúsenosti z oblasti modifikácie slitin AlSi","Studium modifikačního účinku stroncia","Interpretace výsledků Drosstestu a jeho zavedení ve slévárně","Hořčíkové slitiny typu Mg-Al pro slévárenské použití","Vliv legování kovy vzácných zemin na AM60"]},"2012":{"dig":[],"odp":["Ekologická újma a změna chemického zákona"],"form":["Příspěvek k regeneraci ST-směsi olivín – fenolický rezol","Pep-Set: vysoce produktivní výroba forem a jader, srovnání ST-systémů","Geopolymerní pojivové systémy","Praktické zkušenosti s regenerací olivínových písků","Inovace řízení jednotné formovací směsi ve Slévárně Kuřim","Zkušenosti s regenerací ST-směsi s modifikovaným vodním sklem","Zkušenosti s aplikací slévárenských bentonitů"],"lid":[],"eko":["Okolní podmínky, které ovlivňují hospodaření sléváren","Zavádění ekonomického povědomí ve Slévárnách Třinec","Odborná komise ekonomická nabízí slévárnám k využití","Nákladovost apretace odlitků aneb řešení Projektu XIII","Zkušenosti VÚHŽ s realizací dotačních projektů","Optimální regulace elektrod a energetické režimy EOP jako předpoklad nízké spotřeby elektřiny","Zkušenosti s optimalizací spotřeby elektrické energie při výrobě odlitků","Milníky slévárny na její cestě od prosperity k insolvenci","Aktuální vývoj české ekonomiky","Současný stav a vývoj slévárenské výroby v ČR","Daňový odpočet na výzkum a vývoj"],"jine":["Rodný list odlitku ve slévárně JMA","Vodou vyplavitelná jádra pro Al slitiny","Certifikace sléváren dle norem ISO, problémy a záruky","Požadavky na odlitky pro energetiku","Penetrace a připečeniny u odlitků ze železných kovů","Metody odstraňování nálitků za studena","Teplotní gradient jako nástroj predikce vad ocelových odlitků","Technologické a provozní chyby při aplikaci pěnokeramických filtrů","Možnosti numerické simulace slévárenských procesů","Měření mikroporezity u odlitků ze slitin Al a Cu ultrazvukem","Vlastnosti izolačních materiálů nálitků po tepelné expozici","Tepelné zpracování nástrojových materiálů forem pro tlakové lití","Termodynamická analýza litin s různými typy grafitu","Předpokládaná potřeba surových želez ve vybraných evropských zemích 2012–2017","Vliv aktivity kyslíku na metalurgickou kvalitu LKG","Výroba litiny s červíkovitým grafitem","Sekundární struskovitost LKG","Přístroj DOMENA B3 při kontrole kvality odlitků z GJV","Výroba a vlastnosti austenitických litin","Výroba legovaných grafitických a karbidických litin","Zjemňování struktury hmotnějších vakuových odlitků mechanickými oscilacemi","Chování skořepinových forem za vysokých teplot","Odlitky ze slitin TiAl do keramických skořepin","3D měření tvarově složitých dílů","Přesné odlitky v letectví","Zkoušení vosků pro slévárnu Fimes","Laboratorní zkoušení skořepin","Vtokové soustavy pro Al odlitky z vytavitelného modelu","Dolegování Mg slitin pro vyšší teplotní odolnost","Lité Mg slitiny za zvýšených teplot","Naplynění hliníkových slitin v simulaci","Hodnocení a kontrola tekuté fáze Al slitin","Tavení Al v plynové šachtové peci se sklopným kelímkem","Kovové pěny","Tepelně stabilní slitina AJ62 pro tlakové lití","Lasturové lomy po dezoxidaci Al, Zr, Ti a KVZ","Reoxidace vysokolegovaných ocelí","Sekundární metalurgie","Sekundární metalurgie a kyslík v oceli","Vliv sekundární metalurgie na vlastnosti odlitků","Filtrace těžkých ocelových odlitků","Multifunkční kopí","Komplexní řešení pánve žáruvzdornými materiály v ŽĎAS"]},"2013":{"dig":["Informační systém KARAT – řešení nejen pro slévárenství"],"odp":["Ekoauditová novela zákona o odpadech č. 169/2013 Sb. a její dopad na průmyslovou firmu","Recyklace hutních materiálů"],"form":["Analytické stanovení ekologických parametrů směsných bentonitů firmy Keramo","Praktická aplikace lisovaných solných jader v tlakovém lití","První provozní zkušenosti s jádry s proteinovým pojivovým systémem při výrobě odlitků ze slitin hliníku a litin","Formovací materiály v českých slévárnách před 50 lety a dnes","Technologie Geopol – vliv aktivačního atritoru na využitelnost regenerátu a vlastnosti směsí","Možnosti simulace znehodnocení jednotné bentonitové formovací směsi","Je granulometrie a chemické složení u ostřiva to nejdůležitější?","Monitorování procesů přípravy a řízení jednotné směsi ve Slévárně Kuřim, a.s.","Tepelná regenerace a praktické zkušenosti ve Slévárně ČZ a.s., Strakonice"],"lid":[],"eko":["Ekonomická situace ve slévárnách, současné problémy a prognózy","Nákladovost tepelného zpracování ocelových odlitků a tryskání litinových odlitků – Projekt XIV","Postavení controllingu v současné podnikatelské praxi","Neprodejná výroba – náklady vyhozené oknem aneb úvaha nad možnou z cest k úsporám","Vytváření ekonomického povědomí ve Slévárnách Třinec, a.s."],"jine":["Měření vlastností voskových směsí jako vstupních dat do databáze simulačního software","Metalurgicko-materiálové vlastnosti odlitků z vysokolegovaných ocelí používaných v energetice","Nově navržené a vyvinuté technologické zkoušky pro různé druhy korozivzdorných ocelí","Vliv vlastností pěnokeramického filtru na rychlost odlévání","Vliv formy na povrchovou jakost odlitků","Nálitkování odlitků ze slitin železa s použitím podnálitkových podložek","Rentgenová nano- a mikrotomografie pro analýzu odlitků","Využití statistických metod k řízení jakosti výroby ocelových odlitků","Způsoby interpretace výsledků simulace","Péče o chladicí okruhy kovových forem jako podmínka reprodukovatelných mechanických vlastností odlitků ze slitin hliníku","Vplyv intenzity ochladzovania na pórovitosť hliníkových odliatkov","Vliv opakovaného přetavování hliníkových slitin na mechanické vlastnosti a strukturu odlitků","Optimalizace geometrie rotoru pro rafinační zařízení","Výsledky praktických a laboratorních zkoušek vlastností kovových pěn","Ovlivnění krystalizace rotorů turbodmychadel ze slitin niklu","Investment casting furnaces: burnout firing & preheat ceramic moulds","Verifikace počítačové simulace deformací voskových modelů pomocí software ProCAST","Pokročilé plánování a řízení slévárenské výroby v Prague Casting Services a.s.","Nové trendy v technologické přípravě výroby při přesném lití","Řízení procesu metalurgického zpracování litin","Cesta ke zvýšení využití hořčíku při modifikaci plněným profilem","Metalurgicko-materiálové vlastnosti těžkých odlitků z litiny s kuličkovým grafitem","Výhody přímého zkoušení vyrobených odlitků ve srovnání s běžnými atesty","Mechanické vlastnosti odlitků z litiny s kuličkovým grafitem a kontrola modifikace","Výklad zásadních změn v materiálových normách ČSN EN pro litiny k 1. 1. 2013","Vliv síry a grafitizačního očkování na strukturu a mechanické vlastnosti litiny s lupínkovým grafitem","Výroba LKG a LLG v moderní slévárně KASI, spol. s r.o. v Novém Bydžově","Prostředky s obsahem uhlíku používané k řízení jakosti litiny","Fyzikálně chemická podobnost při těžbě a hutnickém zpracování polymetalických a železných rud","Perspektivy vakuových indukčních pecí ve slévárnách oceli","Dezoxidace žáruvzdorných ocelí","Vnitřní jakost masivních ocelových odlitků","Některé aspekty analýzy chemického složení litiny","Characteristics and applications of spherical ceramic sand „Cerabeads“","Tryskací technika v prostředí našich sléváren a podmínky pro její efektivní využití","Zkušenosti s procesem reorganizace slévárny","Zkušenosti s procesem reorganizace Teplické strojírny s.r.o. včetně slévárny"]},"2014":{"dig":["Využívání informačních technologií při řízení firmy Slévárny Třinec, a. s.","APS ve slévárně, využití čárového kódu při sledování průběhu výroby, při odvádění a odměňování","Řízení technologického procesu slévárny za pomocí smartphonů"],"odp":["Aktuální změny a doplňky právních norem v environmentální oblasti"],"form":["Samotvrdnoucí směsi s organickými pojivy – současný stav využívání v českých slévárnách","Přehled parametrů jednotných bentonitových směsí v českých a slovenských slévárnách","Modernizace výrobních technologií v oblasti formovacích směsí ve Slévárně HEUNISCH Brno, s.r.o.","Srovnání technologických vlastností křemenných písků s ohledem na výrobu slévárenských forem","Vliv tepelného zatížení křemenných písků na pojivové systémy cold box, hot box, croning a CO2 rezol"],"lid":["Motivace a motivační prvky ve firmě ALUCAST","Na lidech záleží – potřebují firmy management, nebo vedení?"],"eko":["Vnější ekonomické prostředí a jeho vliv na prosperitu sléváren","Pokračování nákladového hodnocení apretace odlitků v Projektu XV","Dálkové sledování tryskacího procesu – cesta ke snížení tryskacích nákladů","Tvorba komplexního nákladového modelu výroby odlitku","Reorganizace jako způsob ozdravení společnosti v rámci insolvenčního řízení (ČKD Kutná Hora)"],"jine":["Digitalizace mikroskopu NEOPHOT 1","Testování keramických jader za vysokých teplot","Vliv sekundární metalurgie na kvalitu ocelových odlitků","Vznik intermetalických fází při výrobě odlitků z korozivzdorných ocelí","Možnosti výskytu Widmanstättenovy struktury u ocelových odlitků","Vývoj technologie ingotu a výkovku nástrojové oceli s podporou numerického modelování","Vývoj konstrukčních ocelí precipitačně vytvrditelných mědí","Změna obsahu dusíku během vakuování v elektrické vakuové indukční peci","Makrosegregace v ocelových odlitcích a jejich vliv na strukturu a vlastnosti odlitků","Povrchové indukční kalení odlitků z materiálu GS-20Mn5","Rozbor zkušebních vzorků pro zjišťování mechanických vlastností litiny s kuličkovým grafitem","Technologie odlévání tenkostěnných odlitků z litiny s lupínkovým grafitem","Odlitky z nadeutektické chromové litiny odolné proti opotřebení s W, Mg, mischmetalem","Ausferitická litina s červíkovitým grafitem","Využití hliníku pro očkování litin","Vliv zvýšeného obsahu křemíku na vlastnosti těžkých odlitků z EN-GJS","Predikce únavových vlastností litiny s lupínkovým grafitem","Řízení slévárny v předhůří Beskyd","Příklad identifikace příčin zmetkovitosti pomocí dálkového sběru dat ze žíhacích pecí slévárny přesného lití","Nový občanský zákoník v praxi slévárenských obchodníků","Modifikace alkalických silikátů v technologii mikrovlnového vytvrzování","Využití sekundární metalurgie při výrobě těžkých kovářských ingotů","Analýza vlivu argonování na množství mikrovměstků v litých ocelích","Vliv operace HIP na pórovitost a mechanické vlastnosti niklové superslitiny MAR-M-247","Využití inovativních technologických prvků ke snížení objemu vad odlitků ze slitin železa","VÚZ – PI SR se stal historicky prvním slovenským koordinátorem mezinárodního výzkumného projektu","Vliv proměnlivého obsahu mědi ve slitině AlSi6Cu (1–4 hmot. %) na výskyt fází bohatých na měď","Možnosti použitia sekundárnych hliníkových zliatin s vyšším obsahom železa na náročné odliatky","Vplyv dizajnu lisovaných filtrov na plnenie zlievarenskej formy","Optimalizace výroby kovových pěn s pravidelnou strukturou","Význam legujících a doprovodných prvků pro slévárenské vlastnosti siluminů"]},"2015":{"dig":["Informační nákladový systém „made by UXA“"],"odp":["Využití kovonosných briket ve slévárnách pomáhá řešit problémy odpadů","Právní předpisy v oblasti OH, 40. novela zákona o odpadech – 223/2015 Sb., tzv. „infri“ novela"],"form":["Vlhkost bentonitových formovacích směsí","Bentonity LE – Low Emission – nová cesta pro zlepšení životního prostředí","Bentonitové formovací směsi bez uhlíkaté přísady","Nové postupy hodnocení slévárenských ostřiv","Vliv sušení forem a jader na pevnostní vlastnosti furanových formovacích směsí"],"lid":["Zavádění štíhlé výroby ve firmě ALUCAST, s.r.o.","Nové skladové hospodářství a zlepšení pracovních podmínek zaměstnanců ve Slévárně Kuřim, a.s."],"eko":["Vybrané pohledy na hodnocení současného stavu nákladové náročnosti výroby odlitků v České republice","Kolektiv slévačů v PROJEKTECH XV a XVI pokračuje v posuzování nákladovosti odlitků","Problémy nákladovosti tryskání odlitků","Možnosti snížení nákladů při opravách odlitků svařováním","Porovnání ekonomické efektivity tavení litin v šachtových a elektrických indukčních tavicích pecích"],"jine":["Technologie 3D tisku forem a jader – výhody – nevýhody – ekonomika","Unikátní technologie 3D tisku písku v Modelárně LIAZ Liberec","Projekt „Zlepšení procesu tryskání“ ve slévárně S+C Alfanametal","Perspektiva rozvoje technologií 3D tisku v procesech přesného slévárenství","Analýza napětí, deformace a životnosti forem při lití do kovových forem","Optimalizace technologie výroby odlitku pro petrochemický průmysl","Využití izolačních a exotermických prostředků při nálitkování odlitků","Využití 3D dat ve slévárenské technologii","Vývoj technologie metody SHAW","Mechanické hodnoty přilitých vzorků u těžkých odlitků z nízkolegované litiny s kuličkovým grafitem","Mechanismus vzniku chunky grafitu v těžkých odlitcích z litin s kuličkovým grafitem","Nedestruktivní měření tloušťky tenkých křivých stěn dutin litinových odlitků","Odstranění povrchových připečenin u tenkostěnných odlitků z litiny s lupínkovým grafitem","Mechanické a strukturní vlastnosti litin legovaných Cu-Ni","Problematika přechodu z ČSN na EN standardy složitých tenkostěnných litinových odlitků","Slitiny železa na výfuková potrubí spalovacích motorů – trendy, diagnostika","Vady odlitků z LKG způsobené exotermickými obklady nálitků","Využití vápníku ke zvýšení užitných vlastností oceli","Vývoj technologie bimetalických ingotů s využitím numerického a fyzikálního modelování","Problematika výskytu bublin v ingotech z oceli P 91","Nový materiál s vysokou korozní odolností Centralloy® G45Mo","Výroba a vlastnosti austenitických ocelí","Numerický model a řízení sekundární zóny chlazení ZPO v ŽP, a.s.","Problematické oblasti měření tvrdosti rozměrných ocelových odlitků a výkovků","Odlitky lité metodou rheocasting SEED – teorie a praxe","Vplyv umiestnenia filtra vo vtokovej sústave na priebeh plnenia formy","Možnosti řízeného naplynění hliníkových slitin pro eliminaci vad odlitků","Výroba kovových pěn a jejich chování při deformaci","Základní úpravy taveniny slitin hliníku","Možnosti zvýšení mechanických hodnot slitin mědi","Změna kvality slitin hliníku v závislosti na délce přítomnosti v udržovací peci"]},"2019":{"dig":["Vize Komise pro informatiku a automatizaci a její přínos pro české slévárenství","Využití nástrojů cloud computingu ve virtuálních slévárnách","Informační systém slévárny VÚHŽ"],"odp":["Slévárna a cirkulární ekonomika"],"form":["Komplexní řešení produktivity a ekologie při výrobě jader","Aplikace nekřemenných ostřiv při výrobě ocelových odlitků","5. cyklus zpracování přehledu parametrů jednotných formovacích směsí","Penetrace kovu do bentonitových formovacích směsí při odlévání litinových odlitků","Výroba jader metodou termošok","Zkouška ztráta žíháním"],"lid":["Odbornost, empatická inteligence a především kreativita technologů může slévárnu ochránit před nastupující krizí","Teorie omezení ve slévárenské výrobě","Třetí země jako zdroj nové pracovní síly pro slévárny (HAMAG, spol. s r.o.)","Poslání ředitele slévárny v podmínkách českého tržního hospodářství","Praktické poznatky z implementace kontinuálního zlepšování ve slévárnách","Zhodnocení změn po prvním roce působení ve funkci ředitele firmy KOVOLIT ČESKÁ spol. s r.o.","Firemní kultura a motivace pracovníků ve vyspělých zemích a její uplatnění v ČR"],"eko":["Problematika motivace pracovníků a nákladovosti tekutého kovu (Projekt XIX)"],"jine":["Verifikace modifikačního zpracování tvárné litiny injektáží směsi FeSiMg plněným profilem","Numerical analysis of the influence of thermophysical properties on calculation accuracy of solidification processes","Štúdium náchylnosti na vznik trhlín pri rôznom pomere primárnej a sekundárnej zliatiny AlSi9Cu3","Litina s kuličkovým grafitem – tepelné zpracování k získání specifických vlastností","Technologie odlévání ocelových odlitků stínící trubicí - Shroud","Kompletní řada pyrometrů Endurance","Progresivní workflow pro výrobu odlitků do keramických forem","To nejzajímavější z techniky tryskání ve slévárenských provozech","Odlitky na veteránu Buick model 10 z roku 1908","Vplyv vtokovej sústavy na vznik reoxidačných procesov","Řešení neshod u hliníkových odlitků vyráběných do kovových forem","Technológia semisolid squeeze casting","Porovnání filtrace taveniny u Al odlitků vyrobených nízkotlakým litím","Měrná elektrická vodivost a mikroodpor slitin hliníku, mědi a litin ve vztahu k mechanickým vlastnostem kovových pěn","Vliv obsahu modifikačních a očkovacích prvků na proces výroby tekutého kovu pro odlévání slitin hliníku","Případová studie – I tenkostěnný odlitek z Al slitiny lze odlít nízkým tlakem","Pokročilé metody přípravy vzorků TRIP ocelí a jejich zobrazování moderními technikami rastrovacího elektronového mikroskopu","Historie simulace nestacionárního teplotního pole tuhnoucích kovů při změně fáze a struktury","Význam rychlosti odlévání při výrobě odlitků z žáruvzdorných slitin","Vliv tepelného zpracování na vlastnosti martenzitických korozivzdorných ocelí na odlitky","Povrchové laserové kalení litiny s kuličkovým grafitem s různými výchozími strukturami","Rozšířené využití zkušebních tyčí atestů odlitků","Technická přejímka důležitých odlitků produktu","Slévárenská napětí v odlitcích ze slitin železa","Výroba a vlastnosti legovaných litin","Ako znížiť dôležité osobné prekážky v práci"]},"2021":{"dig":[],"odp":["Náprava ekologických škod a zlepšování pracovních podmínek (EMPLA a.s.)"],"form":["Využití regenerátu z mokré regenerace u pojivového systému na bázi vodního skla","Tepelná dilatace slévárenských křemenných ostřiv","Vliv moderních anorganických pojiv na bentonitové směsi","Písková laboratoř – včera, dnes a zítra?","Moderní formovací směsi s organickými pojivy jako nástroj v rukou technologa slévárny"],"lid":["Slévárna, to jsou především její zaměstnanci. Jsou zaměstnanci spokojení?"],"eko":["Moderními odlitky a moderními technologiemi proti ekonomické depresi","Cesta vedoucí k „úhradě“ ztrát způsobených pandemií","Řízení nákladů v malé slévárenské společnosti aplikací moderních metod řízení"],"jine":["Příběh o „ošklivém“ káčátku. Pojednání o „ošklivé“ technologii a o tom, jak slévárna díky lpění na takové technologii může dosíci i veřejného ocenění","Skúsenosti s výrobou tvárnej liatiny v kuplových peciach","Skúsenosti s výrobou tvárnej liatiny v kuplových peciach v ZLH Hronec a.s.","Optimalizace technologie výroby odlitku z LKG","Vývoj optimálních způsobů rafinace hliníkových slitin","Slévárenské hliníkové pěny a jejich výroba","Implementace tkaninových sítek do provozu nízkotlaké slévárny Al","Výroba vysokolegovaných Cr-Ni (Cr-Ni-Mo) ocelí ve slévárnách","Fyzikální modelování mezních stavů proudění oceli v mezipánvi","Vlastnosti litých komponentů ze slitiny MoNiCr pro reaktory IV. generace","Prášková metalurgie aneb co nezvládne slévárenství","Precipitace intermetalických fází v lité duplexní austeniticko-feritické oceli","Vliv relativního smrštění na vznik pnutí v odlitku","Povrchové laserové kalení odlitků s kuličkovým a lupínkovým grafitem po izotermickém kalení","Vlastnosti materiálu litinových sedel, vedení ventilů a pístních kroužků plynových motorů","Karbid křemíku a jeho přednosti použití při výrobě ve slévárnách litinových odlitků","Výroba odlitků z litiny s kuličkovým grafitem metodou vytavitelného voskového modelu","Fyzikální chemie koloidních soustav, podstata očkování litiny s lupínkovým grafitem"]},"2022":{"dig":["Průmysl 4.0, podstata, cíle a jeho rozvoj","Průmyslové roboty ve slévárenství","Automatizace broušení odlitků ve slévárně Brano a.s. – brousící automaty"],"odp":["Omezování ukládání odpadů na řízených skládkách, parametr at4 a výhřevnost. povinnosti testování odpadů, důvody, změny (benzen kontra","Cesta modelárny Midas k nulovým emisím uhlíku"],"form":["Vliv bentonitové formovací směsi na kvalitu povrchu odlitku","Regenerace bentonitových formovacích směsí ve slévárně KASI","Vliv granulometrické skladby křemenného písku na tepelnou dilataci","Anorganické pojivo geopol®, vlastnosti, zkušenosti a provozní ověření","Nové trendy ve vývoji a aplikaci vodou ředitelných nátěrů","Green casting life projekt","Nová generace slévárenských nátěrů na bázi syntetických žáruvzdorných materiálů určených pro ocelové odlitky"],"lid":["Růst produktivity ve slévárně, její udržitelnost a souvislost s firemní kulturou"],"eko":["Ekonomický vývoj v ČR a EU","Současný stav a vývoj slévárenské výroby v ČR","Rekapitulace nákladů na výrobu tekutého kovu ve slévárnách slitin železa od roku 2002","Zniženie nákladou na výrobu tekutého kovu v ZLH","Krize, riziko úpadku a reálné možnosti řešení – pro statutární zástupce a vlastníky obchodních společností","Vodní audit a ekonomika podniku","Snižování energetické náročnosti tavení a udržování hliníkových slitin; alternativy energetických zdrojů v bezemisní budoucnosti"],"jine":["Historie vzniku numerických modelů tuhnutí a jejich ochranné známky na energetickém ústavu FSI VUT v brně","Nauhličovadla James Durrans – hospodárnost využití typu kalcinovaného koksu z fischer- Tropschovy syntézy s důrazem na finální obsah dusíku v tavenině","Žiarobetóny pre zlievarenský priemysel z produkcie rms košice s.r.o.","Sortiment indukčních pecí Junker, jejich bezpečnostní prvky a go indukčních cívek","Výroba a vlastnosti hyperduplexních korozivzdorných ocelí","Výsledky ověření technologie ESR ve ŽĎAS, a.s.","Integration of X46Cr13 hardening with manufacturing of casting bimetal","Grafitizační očkování při výrobě hmotných odlitků z litiny s lupínkovým a kuličkovým grafitem s výchozím kovem z rotační pece","Sedla ventilů z izotermicky kalené litiny s kuličkovým grafitem pro plynové motory","Modifikace litiny s kuličkovým grafitem - historie, současnost, budoucnost","Povrchové laserové kalení legovaných litin","Vliv očkovadel na strukturu a mechanické vlastnosti tenkostěnných odlitků z litiny s kuličkovým grafitem","Studium technologického postupu výroby litiny s kuličkovým grrafitem v provozních podmínkách","The concept of castability test for microcastings","Zkušenosti a využití pásového broušení pro apretaci odlitků z tvárné a šedé litiny ve","Výroba odlitku chladicí desky z elektrovodné mědi se zálitkem","Technologické řešení dokončovacích operací pro odlitky","Využití lamelových filtrů Herding ve slévárenství","Nízkouhlíkaté tryskací materiály – méně je někdy","Kompozity s matricí slitiny Al a výztuží skelného a uhlíkového vlákna","Studie k zalévání chladicích Cu trubic do odlitků převodovek","Technologické aspekty výroby odlitků ze slitin mědi litých do sádrových forem","Squeeze casting – odlévání automotive dílů","Zkušenosti s očkováním a vysokotlakým litím nadeutektických slitin hliníku"]},"2023":{"dig":["Automatizovaná výroba siluminového dílu pro automotive - případová studie"],"odp":["Posuzování environmentálního stavu a environmentálně udržitelného hospodaření podniku s iniciací nejen legislativou, ale také požadavkem financujících, investujících či pojišťujících institucí jako nová výzva pro průmysl","Nakládání s pískem jako odpadem","DISA - udržitelné formování na syrovo"],"form":["Optimalizace výroby coldboxových jader","Vliv chemického složení a charakteru zrn křemenných písků na výslednou dilataci","Interakce ostřivo-bentonit","Komise pro formovací látky a 100 let ČSS"],"lid":["Praktické zkušenosti s podporou rozvoje sléváren z pozice dodavatele procesní excelence","Zvýšenie produktivity ZLH Plus a.s vyhľadávaním a odstránením úzkých miest vo výrobnom procese"],"eko":["Ekonomický vývoj v ČR a EU","Současný stav a vývoj průmyslu v ČR a EU","Světová konkurence a my","Kalkulace odlitků metodou abc (activity-based costing) v praxi","Nákupní aliance není kartel","Challenges of the global foundry industry","Inovovat, predikovat a řídit"],"jine":["Měření přestupu tepla ve slévárenské pískové","Od zrníčka písku k odlitku – propojení dvou světů","Microstructural investigation of solidification and microstructure of ductile cast iron using advanced x-ray methods","Rozvoj technologie investment casting na VUT FSI","Opravy odlitků leteckých motorů","Využití moderních technologií při výrobě odlitků rámů tramvajových podvozků","Trendy v oblasti vývoja hliníkových zliatin s použitím prechodných kovov","Vliv parametrů přípravy polotovaru na vnitřní kvalitu odlitků vyrobených technologií rheocasting seed","Problematika rozpustnosti bórového prášku ve slitinách hliníku","Vplyv zvyšovania podielu viacnásobne pretaveného vratného materiálu zliatiny AlSi9Cu3 vo vsádzke","Precipitace intermetalických fází v lité duplexní austeniticko-feritické oceli","Hodnocení vlastností konstrukční oceli vyrobené technologií ESR","Depozice kovů technologií cold spray, využítí pro niklové slitiny","Vady a jejich vliv na životnost litých a tvářených","Makrosegregace masivních ocelových odlitků","Vliv mědi na vybrané vlastnosti některých ocelí na odlitky","Fyzikálně chemická podstata degradace grafitu v litinách","Praktické využití termické analýzy v slévárně UXA spol. s.r.o., predikce mechanický vlastností a sklon k tvorbě ředin a staženin","Povrchové laserové kalení odlitků z litin s vysokým obsahem Ni a Cr","Modifkace a grafitizační očkování LKG plněmými profily při výchozím kovu z rotačních pecí","Výstupy termické analýzy, zjištění CE, srovnání s výpočtovou metodou, zaručení stability vyráběné","Nedestruktivní metody kontroly tvaru grafitu po modifikaci LKG při provozní výrobě odlitků."]},"2024":{"dig":["Přínosy MES systému a real-time dat ve slévárenském provozu společnosti Motor Jikov","Optimalizácia sklonu kameňa výtokového otvoru pre výhrevy medzipaniev s využitím COMSOL multiphysics surrogate modelu"],"odp":["Možnost využití vodního skla při zpracování odpadního materiálu","Recyklace a regenerace slévárenských materiálů","Přístup k tématu udržitelnosti ve společnosti Hüttenes Albertus","Udržitelnost odpadového hospodářství a ESG – mechanismus uhlíkového vyrovnání na hranicích","Environmentální aspekty výroby odlitků ze slitin hliníku"],"form":["Vliv moderních anorganických pojiv na bentonitové směsi","Geopol no bake a jeho provozní aplikace","Efektivní výroba odlitků díky simulaci a použití keramických ostřiv","Mýty a fakta o formovacích směsích","Prevence vady \"bílá nemoc\" u odlitků odlévaných do furanových směsí"],"lid":[],"eko":["Ekonomický vývoj v ČR a EU","Současný stav a vývoj slévárenské výroby v ČR","Proč nám (z)mizí zakázky, aniž by nám to řekli? příčiny nepružné poptávky po našich produktech a její krátkodobé a dlouhodobé řešení"],"jine":["Scoval: partner pro inovativní, ekonomicky výhodné a ekologicky šetrné technologie ve slévárenství","Panelová diskuze","Rotoclene – rotační zpracování tekutého kovu v pánvi keramickým rotorem","Nízkouhlíkaté tryskací materiály a jejich","Aditivní výroba a využití v praxi","Současné trendy ve výrobě přesných odlitků","Problematika přesnosti výpočtu procesu přesného lití lopatky s jádrem","Optimalizace výroby odlitku ze slitiny al-si pro letištní runway – případová studie","Výskum hybridných hliníkových odliatkov s využitím pórovitých jadier","Analýza vnútornej kvality vysokotlakového odliatku pri zmene procesných parametrov","Co vše lze zjistit právě jen z termické analýzy při kontrole kvality taveniny","Mikročistota ocelí vyráběných na vakuových indukčních pecích","Optimalizace vtokových kanálků pro řízené proudění oceli do kokily","Lze u malých ocelových odlitků dosáhnout mechanických vlastností tvářených dílů či válcovaných polotovarů?","Interakce roztavených kovů s oxidickými keramickými materiály","Přetavování CrMoV nástrojové oceli na zařízení","Hledání eutektického bodu, efektivní řízení výroby pomocí termické analýzy","Představení firmy, výrobky a jejich použití, modifikátory pro výrobu litiny s kuličkovým grafitem","Provozní zkušenosti s použitím přesně litých ocelových odlitků vahadel ventilů","Povrchové laserové kalení odlitků z austenitických litin","Provozně přesná a rychlá analýza určení obsahu uhlíku a charakteru eutektického tuhnutí litiny","Vliv očkovadel a modifikátorů na průběh grafittizace a nodularitu grafitu u odlitků z litiny s kuličkovým grafitem"]},"2025":{"dig":["AI nejen pro slévárenství: možnosti AI od administrativy po výrobu"],"odp":["Formovací materiály – komplikace pro jejich využití, jsou li odpadem?","Analýza a využití odpadních materiálů ze sléváren neželezných kovů"],"form":["Oolitizace bentonitových formovacích směsí","Automatické řízení kvality bentonitové formovací směsi ve slévárně KASI, pomocí řídícího systému Eirich","Chemie pojivového systému Alphaset a regenerace alphasetové formovací směsi","Změna pojivového systému - přechod z furanové na alkydovou formovací směs","Inovativní anorganické pojivové systémy","Méně časté vady odlitků litých do furanových a bentonitových formovacích směsí"],"lid":[],"eko":["Ekonomický vývoj v ČR a EU","Současný stav a vývoj slévárenské výroby v ČR","Nejlepší okamžiky ze světového slévárenského summitu WFO","Finanční kontrola ve slévárně, výzvy a mýty","Thoughts on the situation and global challenges for foundry"],"jine":["Povlakování keramických jader pro přesné lití","Optimalizace tryskacích procesů ve slévárnách: snižte celkové náklady a zvyšte produktivitu","Nepřesnosti při provozním použití termické analýzy","Liatina s gulôčkovým grafitom pre nízke teploty, tavenie a kontrola východzíeho kovu v","Kontrolní plán procesů přípravy a zpracování tekutého kovu pro výrobu odlitků z litiny en- gjs-","Povrchové laserové zpracování austenitických litin s vysokým obsahem Ni","Odlitky bloků válců z litiny s lupínkovým a vermikulárním grafitem pro dopravní a plynový","Využití kvalitativního hodnocení metalurgické kvality slitiny CuZn pomocí termické analýzy apromace za účelem snížení náhodně se vyskytující neshody válcovaných plechů","Volba a návrh technologie výroby repliky motocyklového válce","Mechanizace formování / precizní příprava nátěrů","Precipitace intermetalických fází v duplexních ocelích a jejich vliv na praskání odlitků","Výroba vysokolegovaných korozivzdorných ocelí ve slévárnách","Posouzení vlivu elektrostruskového přetavování na čistotu a mechanické vlastnosti konstrukční","Speciální zkoušky a analýzy pro slévárny","Inovativní způsoby zpracování drahých kovů a speciálních slitin","Využitie pórovitých kovových materiálov v spojení s technológiou overcasting","Numerická realita hliníkových slitin"]}}, TMN = {"dig":"Digitalizace a AI","lid":"Lidé a řízení","eko":"Ekonomika a energie","odp":"Odpady a ESG","form":"Formovací materiály","jine":"Dalších 8 oblastí"};
+const TMQ = {"2019|dig":{"l":"Co je „základ“: změřit procesy, zjistit příčiny a následky a popsat je matematicky. A neztrácet data.","q":["Veškeré procesy je nutné vždy co nejlépe změřit (analyzovat), zjistit souvislosti (příčiny a následky) a pokud možno maximálně matematicky popsat. Toto je základ použití budoucí umělé inteligence ve slévárenství.","Dnes v digitální době to máme jednodušší než naši slévárenští předkové. Važme si této skutečnosti a pokusme se neztrácet data. Jednou bude nutné je použít pro umělou inteligenci ve slévárenství…"],"c":"Z. Král (REX): Odbornost, empatická inteligence a především kreativita technologů může slévárnu ochránit před nastupující krizí, 56. SD 2019. První citace s. 46 (kap. 3.1 „Vnímání procesů musí být smyslové, ne intuitivní“), druhá s. 52 (kap. 8, archivace výsledků)."}};
+function tmOpen(el) {
+  const sl = el.closest('.slide'), c = zoomCard(sl), y = el.dataset.y, k = el.dataset.k, d = TM[y], esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const li = a => a.map(t => '<li>' + esc(t) + '</li>').join('');
+  const n = k === 'all' ? Object.values(d).reduce((q, v) => q + v.length, 0) : d[k].length;
+  c.innerHTML = '<div class="tz' + (n <= 8 ? ' sm' : n <= 14 ? ' md' : ' big') + '"><h3>' + (k === 'all' ? 'Ročník ' + y : TMN[k] + ' · ' + y) + '</h3><p class="ts">' + n + ' příspěvků' + (k === 'all' ? ' (rozřazeno podle názvů)' : '') + '</p><ul>' +
+    (k === 'all' ? Object.keys(TMN).filter(q => d[q].length).map(q => '<h4>' + TMN[q] + ' (' + d[q].length + ')</h4>' + li(d[q])).join('') : li(d[k])) + '</ul>' + (TMQ[y + '|' + k] ? '<blockquote class="tq"><b>' + esc(TMQ[y + '|' + k].l) + '</b>' + TMQ[y + '|' + k].q.map(x => '<p>„' + esc(x) + '“</p>').join('') + '<cite>' + esc(TMQ[y + '|' + k].c) + '</cite></blockquote>' : '') + '</div>';
+  c.dataset.z = 'tm';
+  const sr = sl.getBoundingClientRect(), tr = el.getBoundingClientRect(), kk = sr.width / 1600;
+  c.style.transformOrigin = ((tr.left - sr.left + tr.width / 2) / kk - 70) + 'px ' + ((tr.top - sr.top + tr.height / 2) / kk - 60) + 'px';
+  c.style.overflowY = 'auto'; c.style.justifyContent = n > 14 ? 'flex-start' : ''; c.scrollTop = 0;
+  requestAnimationFrame(() => requestAnimationFrame(() => c.classList.add('open')));
+}
+document.querySelectorAll('.zk').forEach(el => { el.addEventListener('click', () => tmOpen(el)); el.addEventListener('keydown', e => { if (e.key === 'Enter') tmOpen(el); }); });
+// /TM-JS
+
+// přehled slidů
+document.getElementById('grid').innerHTML = slides.map((s, i) => `<div data-i="${i}"><em>${partOf(i)} · ${i + 1}</em>${s.dataset.title}</div>`).join('');
+document.getElementById('grid').addEventListener('click', e => { const d = e.target.closest('[data-i]'); if (d) { document.getElementById('grid').classList.remove('on'); show(+d.dataset.i); } });
+
+// ---------- sloupcové grafy ----------
+function barRow(label, v, cls) {
+  return `<div class="bar"><span>${label}</span><div class="track"><div class="fill ${cls || ''}" data-w="${v}"></div></div><span class="v">${v} %</span></div>`;
+}
+function pairRow(label, a, b) {
+  return `<div class="pair"><span>${label}</span><div class="tracks"><div class="track"><div class="fill" data-w="${a}"></div></div>
+    <div class="track"><div class="fill steel" data-w="${b}"></div></div></div><div class="vals"><span>${a} %</span><span class="muted">${b} %</span></div></div>`;
+}
+document.querySelectorAll('[data-bars]').forEach(el => el.innerHTML = JSON.parse(el.dataset.bars).map(r => barRow(...r)).join(''));
+// sál: UKÁZKOVÁ data; obor: 35 % denně, 9/10 používá (ostatní kategorie k doplnění z dat dotazníku)
+function animateBars(slide) {
+  slide.querySelectorAll('.fill').forEach(f => { f.style.width = 0; requestAnimationFrame(() => requestAnimationFrame(() => f.style.width = f.dataset.w + '%')); });
+}
+
+// ---------- graf druhého mozku (force layout, canvas, bez knihoven) ----------
+const Graph = (() => {
+  const cv = document.getElementById('graph'), ctx = cv.getContext('2d'), tip = document.getElementById('gtip');
+  const data = window.BRAIN || { nodes: [], links: [] };
+  const nodes = data.nodes.map(n => ({ ...n }));
+  const byId = new Map(nodes.map(n => [n.id, n]));
+  const links = data.links.map(l => ({ s: byId.get(l.s), t: byId.get(l.t) })).filter(l => l.s && l.t);
+  const groups = [...new Set(nodes.filter(n => n.type === 'map').map(n => n.group))];
+  const W = 1600, H = 900;
+  const countEl = document.getElementById('gcount'), phaseEl = document.getElementById('gphase');
+  let nodeS = '65%', nodeL = '60%';                       // sytost a světlost oblastí podle tématu (čte se při kreslení)
+  const col = g => `hsl(${(groups.indexOf(g) * 360 / groups.length + 20) % 360} ${nodeS} ${nodeL})`;
+
+  // ================= mozek (souřadnice 0–1000, boční pohled, čelo vlevo) =================
+  // pevné umístění mozku na plátně: jednotka → px
+  const U = { s: 1.1, ox: 469, oy: 8 };
+  const wx = x => U.ox + x * U.s, wy = y => U.oy + y * U.s;
+  const ux = x => (x - U.ox) / U.s, uy = y => (y - U.oy) / U.s;
+  // Catmull-Rom → Bézier: hladká křivka přes body
+  function spline(pts, closed) {
+    const n = pts.length, P = i => pts[closed ? (i + n) % n : Math.max(0, Math.min(n - 1, i))];
+    let d = `M${P(0)[0]} ${P(0)[1]}`;
+    for (let i = 0; i < (closed ? n : n - 1); i++) {
+      const [a, b, c, e] = [P(i - 1), P(i), P(i + 1), P(i + 2)];
+      d += ` C${b[0] + (c[0] - a[0]) / 6} ${b[1] + (c[1] - a[1]) / 6} ${c[0] - (e[0] - b[0]) / 6} ${c[1] - (e[1] - b[1]) / 6} ${c[0]} ${c[1]}`;
+    }
+    return d + (closed ? ' Z' : '');
+  }
+  // hrbolatý obrys: mezi body vloží vyboulení ven od středu → závity na okraji
+  function lumpy(pts, b, cx0, cy0) {
+    const out = [];
+    pts.forEach((p, i) => {
+      const q = pts[(i + 1) % pts.length], mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2;
+      const dx = mx - cx0, dy = my - cy0, d = Math.hypot(dx, dy) || 1;
+      out.push(p, [mx + dx / d * b, my + dy / d * b]);
+    });
+    return out;
+  }
+  const CEREBRUM_PTS = [[115, 330], [130, 250], [175, 175], [245, 115], [335, 70], [435, 45], [545, 38], [645, 50], [745, 85],
+    [835, 140], [905, 215], [948, 300], [955, 385], [925, 455], [870, 495], [790, 510], [715, 515], [665, 540], [610, 585],
+    [530, 622], [440, 638], [355, 628], [290, 600], [250, 560], [245, 515], [290, 478], [225, 462], [165, 428], [125, 385]];
+  const CEREBRUM = new Path2D(spline(lumpy(CEREBRUM_PTS, 10, 540, 330), true));
+  const CEREBELLUM = new Path2D(spline([[680, 560], [730, 528], [810, 515], [880, 500], [925, 525], [922, 585], [870, 628],
+    [790, 642], [715, 625], [675, 595]], true));
+  const STEM_L = [[618, 560], [625, 660], [615, 760], [600, 1000]], STEM_R = [[705, 575], [702, 670], [690, 770], [680, 1000]];
+  const STEM = new Path2D(spline(STEM_L, false) + ' ' + spline(STEM_R, false));
+  const STEM_AREA = new Path2D(spline(STEM_L.concat(STEM_R.slice().reverse()), true));
+  const TUBE = [[640, 1000], [655, 770], [662, 660], [655, 600], [625, 540]];   // dráha nových poznámek kmenem
+  const hitCtx = document.createElement('canvas').getContext('2d');
+  const inCerebrum = (x, y) => hitCtx.isPointInPath(CEREBRUM, x, y);            // v jednotkách
+  // povrch: zvlněné závity (deterministická náhodná procházka uvnitř koncového mozku)
+  const GYRI = (() => {
+    let sd = 3; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647, out = [];
+    for (let k = 0; k < 130; k++) {
+      let x, y, tries = 0;
+      do { x = 130 + r() * 820; y = 45 + r() * 590; } while (!inCerebrum(x, y) && ++tries < 50);
+      let ang = r() * Math.PI * 2; const curl = (r() - .5) * .7, pts = [[x, y]], steps = 6 + r() * 9;
+      for (let s = 0; s < steps; s++) {
+        ang += curl + (r() - .5) * 1.1; x += Math.cos(ang) * 17; y += Math.sin(ang) * 17;
+        if (!inCerebrum(x, y)) break; pts.push([x, y]);
+      }
+      if (pts.length >= 4) out.push(spline(pts, false));
+    }
+    return new Path2D(out.join(' '));
+  })();
+  // hlavní rýhy: sylvijská (odděluje spánkový lalok) a centrální
+  const FISSURES = new Path2D(spline([[290, 478], [380, 455], [480, 440], [570, 445], [650, 420], [715, 378]], false) + ' ' +
+    spline([[560, 42], [548, 110], [575, 170], [545, 240], [562, 300], [530, 385]], false));
+  const FOLIA = new Path2D(Array.from({ length: 9 }, (_, i) => { const y = 515 + i * 15; return `M650 ${y} C750 ${y - 18} 850 ${y - 14} 950 ${y + 6}`; }).join(' '));
+
+  // oblasti = tematické mapy s pevným místem v mozku
+  const REGIONS = [[450, 95], [620, 95],
+    [300, 165], [450, 185], [610, 180], [770, 190],
+    [215, 270], [370, 280], [690, 275], [855, 285],
+    [225, 385], [400, 390], [720, 385], [880, 385],
+    [820, 465],
+    [360, 545], [470, 560], [580, 550], [540, 260],
+    [480, 470], [290, 460], [620, 405],
+    [680, 470], [300, 335], [735, 120]];   // poslední tři: kontext a poznatky, projekty, agenti
+  const mapPos = {};
+  groups.forEach((g, i) => mapPos[g] = [wx(REGIONS[i % REGIONS.length][0]), wy(REGIONS[i % REGIONS.length][1])]);
+  const HUB = [wx(540), wy(330)];
+
+  // mozek ve dvou vrstvách: obrysy (vynoří se první) a vnitřek se závity (dojede s odstupem)
+  let brainImg = null, brainInner = null, brainColor = '';
+  function renderBrain(color) {
+    const layer = () => {
+      const c = document.createElement('canvas'); c.width = W * 2; c.height = H * 2;
+      const g = c.getContext('2d');
+      g.scale(2, 2); g.translate(U.ox, U.oy); g.scale(U.s, U.s);
+      g.lineJoin = g.lineCap = 'round'; g.strokeStyle = g.fillStyle = g.shadowColor = color;
+      return [c, g];
+    };
+    const lw = v => v / U.s;
+    const outside = new Path2D(); outside.rect(-2000, -2000, 6000, 6000); outside.addPath(CEREBRUM);
+    // vnitřek: sklo, závity, rýhy, lístky mozečku
+    const [ci, gi] = layer();
+    gi.globalAlpha = 0.025; gi.fill(CEREBRUM);
+    gi.save(); gi.clip(outside, 'evenodd'); gi.globalAlpha = 0.02; gi.fill(CEREBELLUM); gi.fill(STEM_AREA);
+    gi.save(); gi.clip(CEREBELLUM); gi.globalAlpha = 0.16; gi.lineWidth = lw(1.8); gi.stroke(FOLIA); gi.restore(); gi.restore();
+    gi.save(); gi.clip(CEREBRUM);
+    gi.shadowBlur = 0; gi.globalAlpha = 0.12; gi.lineWidth = lw(1.6); gi.stroke(GYRI);
+    gi.globalAlpha = 0.26; gi.lineWidth = lw(2.4); gi.stroke(FISSURES);
+    gi.globalAlpha = 0.06; gi.lineWidth = lw(14); gi.stroke(CEREBRUM);   // tloušťka skla
+    gi.restore();
+    // obrysy: koncový mozek, mozeček a kmen (ty jen tam, kde nejsou schované za koncovým mozkem)
+    const [co, go] = layer();
+    go.save(); go.clip(outside, 'evenodd');
+    go.shadowBlur = 22; go.globalAlpha = 0.85; go.lineWidth = lw(3); go.stroke(CEREBELLUM); go.stroke(STEM);
+    go.restore();
+    go.shadowBlur = 26; go.globalAlpha = 0.95; go.lineWidth = lw(3.4); go.stroke(CEREBRUM);
+    brainImg = co; brainInner = ci; brainColor = color;
+  }
+
+  // ================= data grafu =================
+  const deg = new Map(); links.forEach(l => { deg.set(l.s, (deg.get(l.s) || 0) + 1); deg.set(l.t, (deg.get(l.t) || 0) + 1); });
+  nodes.forEach(n => n.r = n.type === 'hub' ? 14 : n.type === 'map' ? 10 : 2.6 + Math.min(4, (deg.get(n) - 1) * 1.6));
+  const files = nodes.filter(n => n.type === 'file');
+  const maps = nodes.filter(n => n.type === 'map');
+  const hub = nodes.find(n => n.type === 'hub');
+  const mapOf = new Map(maps.map(m => [m.group, m]));
+  const fileLinks = links.filter(l => l.s.type === 'map');        // mapa → soubor
+  const hubLinks = links.filter(l => l.s.type === 'hub');         // střed → mapa
+  const byMap = new Map(maps.map(m => [m, fileLinks.filter(l => l.s === m)]));
+  const linksOf = new Map(files.map(f => [f, fileLinks.filter(l => l.t === f)]));
+
+  // ================= časová osa (snímky, 60 = 1 s) =================
+  // 0–4 s volné body do 60 · 4–12 s body do 500 a vznikají vazby · při 500 se uzavře mozek
+  // 13–20 s zbylé poznámky přitékají kmenem a paprsky je stáhnou do jejich oblastí · pak ustálení a zmrazení
+  const WRAP_AT = Math.min(790, files.length - 50),   // mozek se uzavře při 790 souborech, zbytek doteče kmenem
+    LINK_START = 4, A_END = 12, A_LINKS_END = 14, B_START = 15.5, B_END = 22.5, SETTLE = 90;   // přítok kmenem až po vynoření mozku
+  let seed, rnd, order = [], t0 = 0, shown = 0, formed = 0, linksA = 0, brainOn = false, ba = 0, done = false, settle = 0,
+    frozen = false, alpha = 1, raf = 0, focus = null, hover = null, extras = [];
+
+  function setFocus(g) { focus = g; document.querySelectorAll('.gctrl [data-g]').forEach(x => x.classList.toggle('on', x.dataset.g === focus)); }
+  function reset() {
+    seed = 7; rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;   // stejné při každém přehrání
+    order = files.slice().sort(() => rnd() - .5);
+    linksA = order.slice(0, WRAP_AT).reduce((s, f) => s + linksOf.get(f).length, 0);
+    for (const n of extras) { nodes.splice(nodes.indexOf(n), 1); links.splice(links.findIndex(l => l.t === n), 1); }
+    extras = [];   // zvolený filtr zůstává — přehrání ukáže, jak vznikala jedna oblast
+    nodes.forEach(n => { n.on = false; n.a = 0; n.vx = n.vy = 0; n.linked = false; n.travel = null; });
+    links.forEach(l => { l.on = false; l.a = 0; l.slow = false; });
+    maps.forEach(m => m.nf = 0);
+    shown = formed = 0; t0 = 0; brainOn = false; ba = 0; done = false; settle = 0; frozen = false; alpha = 1;
+    document.getElementById('gnew').classList.remove('on');
+  }
+  // volný bod se objeví náhodně uvnitř budoucího mozku
+  function spawnFile(n) {
+    n.on = true; let x, y, k = 0;
+    do { x = 140 + rnd() * 800; y = 60 + rnd() * 560; } while (!inCerebrum(x, y) && ++k < 50);
+    n.x = wx(x); n.y = wy(y);
+  }
+  // mapa se zrodí v těžišti svých viditelných bodů a pak se usadí na své místo v mozku
+  function spawnMap(m) {
+    const pts = byMap.get(m).filter(l => l.t.on && l.t.travel == null).map(l => l.t);
+    m.on = true;
+    if (pts.length) { m.x = pts.reduce((s, p) => s + p.x, 0) / pts.length; m.y = pts.reduce((s, p) => s + p.y, 0) / pts.length; }
+    else [m.x, m.y] = mapPos[m.group];
+    if (!hub.on) { hub.on = true; [hub.x, hub.y] = HUB; }
+    const hl = hubLinks.find(l => l.t === m); if (hl) hl.on = true;
+  }
+  function linkOn(l, slow) { if (!l.s.on) spawnMap(l.s); l.on = true; l.a = 0; l.slow = slow; l.t.linked = true; l.s.nf++; formed++; }
+  // jedna vazba ve fázi růstu: mapa vybraná úměrně počtu vazeb (bohatí bohatnou → shluky rostou postupně)
+  function formOne() {
+    const cand = [];
+    for (const [m, ls] of byMap) { const p = ls.filter(l => !l.on && l.t.on && l.t.travel == null); if (p.length) cand.push([p, (m.nf + 1) ** 1.6]); }
+    if (!cand.length) return false;
+    let r = rnd() * cand.reduce((s, c) => s + c[1], 0), pick = cand[0];
+    for (const c of cand) { if ((r -= c[1]) <= 0) { pick = c; break; } }
+    linkOn(pick[0][Math.floor(rnd() * pick[0].length)], false);
+    return true;
+  }
+  // nová poznámka do kmene (travel < 0 = čeká ve frontě)
+  function launch(n, delay) { n.on = true; n.travel = -delay; n.a = 1; [n.x, n.y] = [wx(TUBE[0][0]), wy(TUBE[0][1])]; }
+  function tubeAt(p) {                                      // pozice na dráze kmenem, p 0..1
+    const seg = TUBE.length - 1, i = Math.min(seg - 1, Math.floor(p * seg)), f = p * seg - i;
+    return [wx(TUBE[i][0] + (TUBE[i + 1][0] - TUBE[i][0]) * f), wy(TUBE[i][1] + (TUBE[i + 1][1] - TUBE[i][1]) * f)];
+  }
+  // výstup z kmene: paprsky ke všem jejím oblastem, oblast si ji přitáhne
+  function arrive(n) {
+    n.travel = null;
+    const ls = n.fresh ? links.filter(l => l.t === n) : linksOf.get(n);
+    for (const l of ls) { if (n.fresh) { l.on = true; l.a = 0; l.slow = true; n.linked = true; } else linkOn(l, true); }
+    const m = ls[0] && ls[0].s;
+    if (m) { n.vx = (m.x - n.x) * 0.1; n.vy = (m.y - n.y) * 0.1; }
+  }
+
+  function grow() {
+    const t = ++t0 / 60;
+    // fáze A: body a vazby
+    const wantA = t < LINK_START ? Math.floor(60 * t / LINK_START)
+      : Math.floor(60 + (WRAP_AT - 60) * Math.min(1, ((t - LINK_START) / (A_END - LINK_START)) ** 1.6));
+    while (shown < Math.min(wantA, WRAP_AT)) spawnFile(order[shown++]);
+    if (t >= LINK_START) {
+      const wantL = Math.floor(linksA * Math.min(1, ((t - LINK_START) / (A_LINKS_END - LINK_START)) ** 1.5));
+      while (formed < wantL && formOne());
+    }
+    if (!brainOn && shown >= WRAP_AT) brainOn = true;
+    // fáze B: zbytek přitéká kmenem, zrychleně
+    if (t >= B_START && shown < files.length) {
+      const wantB = WRAP_AT + Math.ceil((files.length - WRAP_AT) * Math.min(1, ((t - B_START) / (B_END - B_START)) ** 1.3));
+      while (shown < Math.min(wantB, files.length)) launch(order[shown++], 0);
+    }
+    if (t > A_LINKS_END + 1) while (formOne());           // dotažení vazeb fáze A
+    const travelling = nodes.some(n => n.travel != null);
+    if (shown === files.length && !travelling && formed === fileLinks.length) done = true;
+    countEl.textContent = shown + ' souborů';
+    phaseEl.textContent = formed === 0 ? 'Jednotlivé poznámky — zatím bez souvislostí'
+      : !brainOn ? `Vznikají vazby a shluky · ${formed} vazeb`
+      : shown < WRAP_AT + 1 && t < B_START ? 'Z propojených poznámek vzniká mozek'
+      : !done ? `Nové poznámky přicházejí a zařazují se · ${formed} vazeb`
+      : `Propojený druhý mozek · ${maps.length} oblastí · ${formed + hubLinks.length} vazeb`;
+  }
+
+  function tick() {
+    if (frozen) return;                                 // usazený mozek se nehýbe (jen tažení myší)
+    // cesta kmenem
+    for (const n of nodes) if (n.travel != null) {
+      n.travel += 0.028;
+      if (n.travel >= 1) arrive(n); else if (n.travel >= 0) [n.x, n.y] = tubeAt(n.travel);
+    }
+    const vis = nodes.filter(n => n.on && n.travel == null), k = alpha;
+    const damp = done ? Math.max(0, 1 - settle / SETTLE) : 1;
+    for (let i = 0; i < vis.length; i++) {              // odpuzování
+      const a = vis[i];
+      for (let j = i + 1; j < vis.length; j++) {
+        const b = vis[j]; let dx = a.x - b.x, dy = a.y - b.y, d2 = Math.max(4, dx * dx + dy * dy);   // min. vzdálenost: dva body na stejném místě nesmí vystřelit
+        if (d2 > 6400) continue;
+        const f = 30 * k / d2; a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+      }
+    }
+    vis.forEach(n => n.hot = false);
+    for (const l of links) {                            // pružiny (paprsky) sílí, jak vazba dozrává
+      if (!l.on) continue;
+      l.a = Math.min(1, l.a + (l.slow ? 0.012 : 0.03));
+      if (l.slow && l.a < 1) l.t.hot = true;            // bod na čerstvém paprsku se ještě nesmí brzdit
+      if (l.s.type === 'hub' || l.t.travel != null) continue;
+      const s = (l.slow ? 0.08 : 0.05) * Math.max(l.a, 0.3);
+      let dx = l.t.x - l.s.x, dy = l.t.y - l.s.y, d = Math.hypot(dx, dy) || 1, f = (d - 30) / d * s * Math.max(k, 0.3);
+      l.t.vx -= dx * f; l.t.vy -= dy * f;   // mapa drží své místo — zpětný tah stovek souborů by ji rozkmital
+    }
+    const prog = formed / fileLinks.length;
+    for (const n of vis) {
+      n.a = Math.min(1, n.a + 0.05);
+      if (n.type === 'hub') { [n.x, n.y] = HUB; continue; }
+      if (n.type === 'map') { const [mx, my] = mapPos[n.group], s = 0.006 + 0.04 * prog; n.vx += (mx - n.x) * s; n.vy += (my - n.y) * s; }
+      if (n.fixed) continue;
+      const sp = Math.hypot(n.vx, n.vy); if (sp > 40) { n.vx *= 40 / sp; n.vy *= 40 / sp; }   // strop rychlosti
+      const dm = n.hot ? 1 : damp;
+      n.x += (n.vx *= 0.6) * dm; n.y += (n.vy *= 0.6) * dm;
+      // po uzavření mozku: bod venku posuň k jeho oblasti těsně pod okraj (půlení intervalu, náhodná hloubka)
+      if (brainOn && n.type === 'file' && !inCerebrum(ux(n.x), uy(n.y))) {
+        const m = n.linked && mapOf.get(n.group), tx = m && m.on ? m.x : HUB[0], ty = m && m.on ? m.y : HUB[1];
+        let lo = 0, hi = 1;
+        for (let i = 0; i < 10; i++) { const q = (lo + hi) / 2; inCerebrum(ux(n.x + (tx - n.x) * q), uy(n.y + (ty - n.y) * q)) ? hi = q : lo = q; }
+        const tt = Math.min(1, hi + 0.04 + rnd() * 0.12);
+        // volné vplutí: krok sílí s tím, jak se mozek vynořuje (na začátku skoro nic, pak ~4 % cesty za snímek)
+        const step = 0.004 + 0.04 * Math.min(1, ba / 0.6);
+        n.x += (tx - n.x) * tt * step; n.y += (ty - n.y) * tt * step; n.vx *= 0.5; n.vy *= 0.5;
+      }
+    }
+    alpha = Math.max(done ? 0.02 : 0.35, alpha * 0.99);
+    if (brainOn) ba = Math.min(1, ba + 0.0048);         // průběh vynoření mozku (v simulaci, aby fungovalo i přetočení)
+    // odpočet k zmrazení běží, až v kmeni nic neputuje — příchozí body se musí stihnout usadit
+    if (nodes.some(n => n.travel != null || n.hot)) settle = 0;
+    else if (done && ++settle > SETTLE) frozen = true;
+  }
+
+  function draw() {
+    const dpr = devicePixelRatio || 1, rect = cv.getBoundingClientRect();
+    const sw = Math.round(rect.width * dpr), sh = Math.round(rect.height * dpr);
+    if (cv.width !== sw || cv.height !== sh) { cv.width = sw; cv.height = sh; }
+    ctx.setTransform(sw / W, 0, 0, sh / H, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const css = getComputedStyle(cv);
+    nodeS = css.getPropertyValue('--node-s').trim() || nodeS; nodeL = css.getPropertyValue('--node-l').trim() || nodeL;
+    const lineC = css.getPropertyValue('--link').trim() || css.getPropertyValue('--line').trim(), acc = css.getPropertyValue('--accent').trim(), ink = css.getPropertyValue('--ink').trim();
+    if (brainOn) {                                      // skleněný mozek za grafem, plynule se vynoří
+      const bc = css.getPropertyValue('--brain').trim();
+      if (!brainImg || brainColor !== bc) renderBrain(bc);
+      // pomalý nástup (~3,5 s): obrysy do 60 % průběhu, závity od 30 % do konce (plynulé křivky)
+      const ease = v => v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v);
+      ctx.globalAlpha = ease(ba / 0.6); ctx.drawImage(brainImg, 0, 0, W, H);
+      ctx.globalAlpha = ease((ba - 0.3) / 0.7); ctx.drawImage(brainInner, 0, 0, W, H);
+    }
+    for (const l of links) {
+      if (!l.on || l.t.travel != null) continue;
+      const hot = l.a < 1, on = focus && (l.t.group === focus || l.t.fresh);
+      // čerstvá vazba = paprsek v barvě oblasti, pak zešedne do sítě
+      ctx.lineWidth = hot && l.slow ? 1.8 : 1;
+      ctx.strokeStyle = on ? (l.t.fresh ? acc : col(focus)) : hot && l.s.group ? col(l.s.group) : lineC;
+      ctx.globalAlpha = (focus && !on ? 0.25 : 0.8) * (l.slow && hot ? 1 : Math.min(1, l.a * 2));
+      ctx.beginPath(); ctx.moveTo(l.s.x, l.s.y); ctx.lineTo(l.t.x, l.t.y); ctx.stroke();
+    }
+    for (const n of nodes) {
+      if (!n.on || n.travel < 0) continue;
+      const dim = focus && n.group !== focus && !n.fresh && n.type !== 'hub';
+      ctx.globalAlpha = (dim ? 0.15 : 1) * n.a;
+      const inTube = n.travel != null;
+      // bez vazby neutrální, v kmeni svítí akcentem, zařazený v barvě oblasti
+      ctx.fillStyle = inTube || n.fresh || n.type === 'hub' ? acc : n.type === 'file' && !n.linked ? ink : col(n.group);
+      if (inTube) { ctx.shadowColor = acc; ctx.shadowBlur = 12; }
+      const pulse = n.a < 1 ? 1 + (1 - n.a) * 1.5 : 1;
+      const r = inTube ? 4 : (n.fresh ? n.r + 2 + Math.sin(performance.now() / 200) * 1.5 : n.type === 'file' && !n.linked ? 2.6 : n.r) * pulse;
+      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    ctx.fillStyle = ink; ctx.font = '600 15px ' + css.getPropertyValue('--font');
+    for (const n of maps) if (n.on && (!focus || n.group === focus)) {
+      ctx.globalAlpha = n.a;
+      // strana popisku podle pevného místa oblasti — nepřeskakuje
+      const right = ux(mapPos[n.group][0]) > 620;
+      ctx.textAlign = right ? 'right' : 'left';
+      // krátký název oblasti (do první čárky/pomlčky), celý název je v tooltipu
+      ctx.fillText(n.label.split(/,| —| a | \(/)[0].trim(), n.x + (right ? -13 : 13), n.y + 5);
+    }
+    ctx.textAlign = 'left'; ctx.globalAlpha = 1;
+  }
+  function loop() { if (!done) grow(); tick(); draw(); raf = requestAnimationFrame(loop); }
+
+  // myš: souřadnice přes škálování decku
+  function pos(e) { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H]; }
+  function pick(x, y) { let best = null, bd = 144; for (const n of nodes) { if (!n.on || n.travel != null) continue; const d = (n.x - x) ** 2 + (n.y - y) ** 2; if (d < Math.max(bd, n.r * n.r)) { bd = d; best = n; } } return best; }
+  let drag = null;
+  cv.addEventListener('mousedown', e => { const [x, y] = pos(e); drag = pick(x, y); if (drag) drag.fixed = true; });
+  addEventListener('mouseup', () => { if (drag) drag.fixed = false; drag = null; });
+  cv.addEventListener('mousemove', e => {
+    const [x, y] = pos(e);
+    if (drag) { drag.x = x; drag.y = y; return; }
+    hover = pick(x, y);
+    if (hover && hover.label) { tip.style.display = 'block'; tip.textContent = hover.label; tip.style.left = (x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; }
+    else tip.style.display = 'none';
+  });
+  document.querySelectorAll('.gctrl [data-g]').forEach(b => b.addEventListener('click', () => setFocus(focus === b.dataset.g ? null : b.dataset.g)));
+  document.getElementById('greplay').addEventListener('click', reset);
+  // SIMULACE: 8 „přednášek 10. 11.“ přiteče kmenem do oblasti Slévárna (ve finále nahradit skutečnými soubory)
+  document.getElementById('gnew').addEventListener('click', e => {
+    const map = mapOf.get('slevarenske-dny');
+    if (e.target.classList.contains('on') || !map.on) return;
+    e.target.classList.add('on');
+    for (let i = 0; i < 8; i++) {
+      const n = { id: 'new' + i, label: `Přednáška 10. 11. — č. ${i + 1} (simulace)`, type: 'file', group: map.group, fresh: true,
+        linked: false, vx: 0, vy: 0, r: 5 };
+      nodes.push(n); links.push({ s: map, t: n, on: false, a: 0 }); extras.push(n);
+      launch(n, i * 0.35);
+    }
+    countEl.textContent = (files.length + extras.length) + ' souborů';
+    setFocus(map.group); frozen = false; settle = 0; alpha = 0.6;
+  });
+  return {
+    start() { if (!raf) { reset(); loop(); } },
+    // přetočí animaci o n snímků bez kreslení (klávesa E = na konec)
+    skip(n = 2000) { for (let i = 0; i < n && !frozen; i++) { if (!done) grow(); tick(); } },
+    stop() { cancelAnimationFrame(raf); raf = 0; },
+    // statický mozek na závěrečný slide: stejné křivky jako v grafu, uvnitř tečky (bez dat, jen obraz)
+    still(c, color) {
+      const g = c.getContext('2d'); g.save(); g.translate(30, 10); g.lineJoin = g.lineCap = 'round'; g.strokeStyle = g.shadowColor = color;
+      g.save(); g.clip(CEREBRUM); g.globalAlpha = .2; g.lineWidth = 1.6; g.stroke(GYRI); g.globalAlpha = .35; g.lineWidth = 2.4; g.stroke(FISSURES); g.restore();
+      const outside = new Path2D(); outside.rect(-2000, -2000, 6000, 6000); outside.addPath(CEREBRUM);
+      g.save(); g.clip(outside, 'evenodd'); g.globalAlpha = .85; g.lineWidth = 3; g.stroke(CEREBELLUM); g.stroke(STEM); g.restore();
+      g.globalAlpha = .95; g.lineWidth = 3.4; g.stroke(CEREBRUM); g.globalAlpha = 1;
+      let sd = 7; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+      for (let k = 0; k < 620; k++) {
+        const x = 110 + r() * 850, y = 35 + r() * 610, h = r() * 360, s = 2.2 + r() * 3.4;
+        if (!inCerebrum(x, y)) continue;
+        g.fillStyle = `hsl(${h} 65% 48%)`; g.beginPath(); g.arc(x, y, s, 0, 7); g.fill();
+      }
+      g.restore();
+    }
+  };
+})();
+Graph.still(document.getElementById('brainStill'), 'oklch(0.55 0.19 25)');
+
+const fromHash = () => (parseInt(location.hash.slice(1)) || 1) - 1;
+addEventListener('hashchange', () => { if (fromHash() !== cur) show(fromHash()); });
+show(fromHash());
+// ---------- laserové ukazovátko (klávesa L) ----------
+let laserOn = false, laserPoints = [], laserAnimReq = null;
+const laserDot = document.getElementById('laser-dot'), laserHint = document.getElementById('laser-hint');
+const laserCanvas = document.getElementById('laser-trail'), laserCtx = laserCanvas.getContext('2d');
+function resizeLaserCanvas() { laserCanvas.width = innerWidth; laserCanvas.height = innerHeight; }
+addEventListener('resize', resizeLaserCanvas);
+function laserLoop() {
+  const now = performance.now(), life = 550;
+  laserPoints = laserPoints.filter(p => now - p.t < life);
+  laserCtx.clearRect(0, 0, laserCanvas.width, laserCanvas.height);
+  laserCtx.lineCap = 'round'; laserCtx.lineJoin = 'round';
+  for (let i = 1; i < laserPoints.length; i++) {
+    const p0 = laserPoints[i - 1], p1 = laserPoints[i], age = (now - p1.t) / life;
+    laserCtx.strokeStyle = 'rgba(255,25,25,' + Math.max(0, 1 - age) * 0.65 + ')';
+    laserCtx.lineWidth = Math.max(1, 8 * (1 - age));
+    laserCtx.beginPath(); laserCtx.moveTo(p0.x, p0.y); laserCtx.lineTo(p1.x, p1.y); laserCtx.stroke();
+  }
+  laserAnimReq = (laserOn || laserPoints.length) ? requestAnimationFrame(laserLoop) : null;
+}
+function setLaser(on) {
+  laserOn = on;
+  laserDot.classList.toggle('on', on); laserHint.classList.toggle('on', on);
+  laserCanvas.style.display = on ? 'block' : 'none';
+  document.documentElement.classList.toggle('laser', on);
+  if (on) { resizeLaserCanvas(); laserPoints = []; }
+  if (!laserAnimReq) laserAnimReq = requestAnimationFrame(laserLoop);
+}
+addEventListener('keydown', e => {
+  if (e.key !== 'l' && e.key !== 'L') return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+  setLaser(!laserOn);
+});
+addEventListener('mousemove', e => {
+  if (!laserOn) return;
+  laserDot.style.left = e.clientX + 'px'; laserDot.style.top = e.clientY + 'px';
+  laserPoints.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+});
+</script>
+<a href="../" style="position:fixed;right:14px;top:12px;z-index:99999;font:700 15px/1 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:#fff;background:#14161aCC;padding:8px 12px;border-radius:8px">← Materiály</a></body>
+</html>

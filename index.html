@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slévárenské dny v éře AI – materiály</title>
+<meta name="description" content="Podklady k přednášce Od přednášek k druhému mozku (Slévárenské dny 2026): prezentace, články, data z průzkumu, prompt pro vaši AI.">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+/* Design system v3 · Slévárna Kuřim — stejné tokeny jako prezentace */
+:root {
+  --red: oklch(0.53 0.19 25); --red-h: oklch(0.58 0.20 25); --red-light: oklch(0.96 0.025 25); --red-mid: #f0b0b0;
+  --green: oklch(0.53 0.14 145); --amber: oklch(0.58 0.15 70); --amber-light: oklch(0.96 0.035 70); --amber-mid: oklch(0.82 0.09 70);
+  --black: oklch(0.20 0.006 260); --gray-700: oklch(0.44 0.007 260); --gray-500: oklch(0.56 0.006 260); --gray-400: oklch(0.66 0.006 260);
+  --gray-200: oklch(0.90 0.004 260); --gray-100: oklch(0.965 0.003 260); --gray-50: oklch(0.985 0.002 260); --white: oklch(0.995 0.001 260);
+  --border: oklch(0.85 0.005 260); --border-light: oklch(0.91 0.004 260);
+  --shadow-sm: 0 1px 2px rgba(20,25,40,.05); --shadow: 0 2px 10px rgba(20,25,40,.07);
+  --radius: 14px; --radius-sm: 10px;
+  --bg: var(--gray-50); --bg-2: var(--white); --ink: var(--black); --ink-2: var(--gray-500); --line: var(--border-light);
+  --accent: var(--red); --steel: var(--gray-700);
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --red: oklch(0.68 0.17 25); --red-h: oklch(0.73 0.17 25); --red-light: oklch(0.30 0.06 25); --red-mid: oklch(0.44 0.11 25);
+  --green: oklch(0.68 0.13 145); --amber: oklch(0.74 0.13 70); --amber-light: oklch(0.31 0.06 70); --amber-mid: oklch(0.50 0.10 70);
+  --black: oklch(0.94 0.003 260); --gray-700: oklch(0.74 0.007 260); --gray-500: oklch(0.62 0.006 260); --gray-400: oklch(0.50 0.006 260);
+  --gray-200: oklch(0.40 0.006 260); --gray-100: oklch(0.14 0.006 260); --gray-50: oklch(0.10 0.006 260); --white: oklch(0.26 0.007 260);
+  --border: oklch(0.42 0.006 260); --border-light: oklch(0.36 0.006 260);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow: 0 4px 16px rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.55; transition: background-color .25s, color .25s; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+/* horní lišta */
+.top { position: sticky; top: 0; z-index: 10; background: color-mix(in oklch, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 18px; height: 54px; }
+.brand { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+.top nav { margin-left: auto; display: flex; gap: 20px; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .1em; text-transform: uppercase; }
+.top nav a { text-decoration: none; color: var(--ink-2); }
+.top nav a:hover { color: var(--accent); }
+.tbtn { font-family: var(--mono); font-size: 13px; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-2); color: var(--ink-2); cursor: pointer; }
+.tbtn:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 640px) { .top nav a:not(:first-child) { display: none; } }
+
+/* typografie jako v prezentaci */
+.kicker { font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+.kicker::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+h1 { font-family: var(--display); font-size: clamp(46px, 9vw, 96px); line-height: 1; font-weight: 800; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: clamp(34px, 5.5vw, 56px); line-height: 1.04; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; margin-bottom: 14px; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.1; letter-spacing: .05em; text-transform: uppercase; }
+.acc { color: var(--accent); }
+.lead { font-size: clamp(18px, 2.4vw, 24px); color: var(--ink-2); max-width: 760px; }
+.mono { font-family: var(--mono); font-size: 14px; font-weight: 600; }
+.muted { color: var(--ink-2); }
+
+section { padding: 64px 0 8px; }
+.hero { padding: 72px 0 24px; }
+.hero .lead { margin-top: 26px; }
+.who { margin-top: 24px; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.who span { color: var(--ink-2); }
+
+/* karty materiálů: levý okraj = stav */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 28px; }
+.card { background: var(--bg-2); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 10px; }
+.card.soon { border-left-color: var(--amber-mid); }
+.card p { color: var(--ink-2); font-size: 16px; }
+.card .acts { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 10px; }
+.badge { align-self: flex-start; font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 11px; border-radius: 6px; background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-mid); }
+.badge.ok { background: var(--red-light); color: var(--accent); border-color: var(--red-mid); }
+.btn { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .09em; text-transform: uppercase; text-decoration: none; padding: 9px 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--accent); background: var(--accent); color: var(--white); cursor: pointer; line-height: 1.1; }
+:root[data-theme="dark"] .btn { color: oklch(0.15 0.01 260); }
+.btn:hover { background: var(--red-h); border-color: var(--red-h); }
+.btn.ghost { background: transparent; color: var(--accent); }
+:root[data-theme="dark"] .btn.ghost { color: var(--accent); }
+.btn.ghost:hover { background: var(--red-light); }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+
+/* jak to použít */
+.how { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; counter-reset: s; }
+.how div { position: relative; padding: 22px 24px 22px 74px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); counter-increment: s; }
+.how div::before { content: counter(s); position: absolute; left: 22px; top: 14px; font-family: var(--display); font-size: 52px; font-weight: 800; color: var(--accent); line-height: 1; }
+.how b { font-family: var(--display); font-size: 21px; letter-spacing: .06em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+.how span { color: var(--ink-2); font-size: 15.5px; }
+
+/* čísla = KPI karty */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; margin-top: 28px; }
+.stat { background: var(--bg-2); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow-sm); }
+.stat .n { white-space: nowrap; font-family: var(--display); font-size: clamp(48px, 6.2vw, 68px); font-weight: 800; line-height: .95; color: var(--accent); font-variant-numeric: tabular-nums; }
+.stat .l { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); margin-top: 8px; line-height: 1.2; }
+
+.method { margin-top: 24px; padding: 18px 22px; border-radius: var(--radius); background: var(--amber-light); border: 1px solid var(--amber-mid); border-left: 5px solid var(--amber); font-size: 15.5px; }
+.method b { font-family: var(--display); letter-spacing: .08em; text-transform: uppercase; font-size: 17px; }
+
+.panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; margin-top: 20px; }
+.panel { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px 24px; box-shadow: var(--shadow-sm); }
+.panel h3 { margin-bottom: 4px; }
+.panel .sub { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
+.bar { display: grid; grid-template-columns: minmax(110px, 1.1fr) 2fr 48px; gap: 12px; align-items: center; padding: 4px 0; font-size: 15px; }
+.bar .track { height: 14px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width .9s cubic-bezier(.2,.7,.2,1); }
+.bar .fill.alt { background: var(--gray-400); }
+.bar .fill.amb { background: var(--amber); }
+.bar .v { font-family: var(--mono); font-size: 13.5px; font-weight: 600; text-align: right; }
+.legend { display: flex; gap: 18px; font-size: 13.5px; color: var(--ink-2); margin-bottom: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+.pair { padding: 6px 0; font-size: 15px; }
+.pair > span { display: block; margin-bottom: 3px; }
+.pair .tr { display: grid; grid-template-columns: 1fr 44px; gap: 10px; align-items: center; padding: 2px 0; }
+.pair .tr.l { grid-template-columns: 78px 1fr 44px; }
+.pair .rl { font-size: 13.5px; color: var(--ink-2); }
+.pair .track { height: 12px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+.pair .fill { height: 100%; width: 0; border-radius: 4px; background: var(--accent); transition: width .9s cubic-bezier(.2,.7,.2,1); }
+.pair .fill.alt { background: var(--gray-400); }
+.pair .v { font-family: var(--mono); font-size: 13px; font-weight: 600; text-align: right; }
+.dl { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+footer { margin-top: 72px; padding: 28px 0 44px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14.5px; }
+footer .wrap { display: flex; gap: 12px 28px; flex-wrap: wrap; justify-content: space-between; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--chrome, #14161a); color: #fff; font-size: 15px; padding: 10px 18px; border-radius: 10px; opacity: 0; pointer-events: none; transition: .25s; z-index: 20; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#">SD 2026</a>
+  <nav><a href="#materialy">Materiály</a><a href="#pruzkum">Průzkum</a><a href="#ai">S AI</a></nav>
+  <button class="tbtn" id="theme" title="Světlý / tmavý režim" aria-label="Přepnout světlý a tmavý režim">◐</button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">62. Slévárenské dny · 11. 11. 2026</div>
+    <h1>Od přednášek <span class="acc">k druhému mozku</span></h1>
+    <p class="lead">Všechno k přednášce na jednom místě. Stáhněte si to, nahrajte do své AI a ptejte se.</p>
+    <p class="who">Pavel Šebesta <span>· Slévárna Kuřim, a.s.</span></p>
+  </section>
+
+  <section id="materialy">
+    <div class="kicker">Ke stažení</div>
+    <h2>Materiály</h2>
+    <div class="cards">
+      <article class="card">
+        <span class="badge ok">K dispozici</span>
+        <h3>Prezentace</h3>
+        <p>Slidy z přednášky, včetně živého grafu druhého mozku. Šipky nebo tah prstem.</p>
+        <div class="acts">
+          <a class="btn" href="prezentace/">Otevřít</a>
+          <a class="btn ghost" href="podklady/prezentace-prepis.md" download>Přepis textu .md</a>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge ok">K dispozici</span>
+        <h3>Článek ze Slévárenských listů</h3>
+        <p>Adopce AI: nejsme pozadu sami, ale to není důvod čekat. Text s popisy obrázků a tabulek pro AI čtenáře.</p>
+        <div class="acts">
+          <a class="btn" href="podklady/clanek-slevarenske-listy-2026.md" download>Stáhnout .md</a>
+          <button class="btn ghost" data-copy="podklady/clanek-slevarenske-listy-2026.md">Zkopírovat text</button>
+        </div>
+      </article>
+      <article class="card soon">
+        <span class="badge">Připravuji</span>
+        <h3>Článek ze Slévárenství</h3>
+        <p>Adopce AI ve slévárenství: kde jsou slévači a kde firmy. Přepis pro AI doplním, jakmile bude k dispozici.</p>
+        <div class="acts"><a class="btn" aria-disabled="true">Zatím není</a></div>
+      </article>
+      <article class="card">
+        <span class="badge ok">K dispozici</span>
+        <h3>Data z průzkumu</h3>
+        <p>Souhrnná čísla z dotazníků mezi slévači (n = 49) a slévárnami (n = 23), s poznámkou k metodě.</p>
+        <div class="acts">
+          <a class="btn" href="#pruzkum">Zobrazit</a>
+          <a class="btn ghost" href="podklady/pruzkum-slevarenstvi-2026.md" download>Stáhnout .md</a>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge ok">K dispozici</span>
+        <h3>Prompt pro váš osobní kontext</h3>
+        <p>Zadání pro vaši AI: povede s vámi rozhovor a sestaví dokument, který jí pak dáte na začátku každého chatu.</p>
+        <div class="acts">
+          <a class="btn" href="podklady/prompt-osobni-ai-kontext.md" download>Stáhnout .md</a>
+          <button class="btn ghost" data-copy="podklady/prompt-osobni-ai-kontext.md">Zkopírovat text</button>
+        </div>
+      </article>
+      <article class="card soon">
+        <span class="badge">Do pár dní po akci</span>
+        <h3>Přepis přednášky</h3>
+        <p>Celý výklad jako text. Nahrávku přepíšu a pošlu sem, ať ji můžete vložit do své AI.</p>
+        <div class="acts"><a class="btn" aria-disabled="true">Zatím není</a></div>
+      </article>
+      <article class="card soon">
+        <span class="badge">Po přepisu</span>
+        <h3>Shrnutí přednášky</h3>
+        <p>Krátké shrnutí hlavních myšlenek a doporučených kroků, vytvořené z přepisu.</p>
+        <div class="acts"><a class="btn" aria-disabled="true">Zatím není</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="ai">
+    <div class="kicker">Jak s tím pracovat</div>
+    <h2>Nahrajte si to do své AI</h2>
+    <p class="lead">Všechny podklady jsou obyčejné textové soubory (.md). Čte je člověk i AI.</p>
+    <div class="how">
+      <div><b>Stáhněte</b><span>Soubor .md, nebo tlačítkem „Zkopírovat text“ rovnou do schránky.</span></div>
+      <div><b>Vložte do AI</b><span>ChatGPT, Gemini, Copilot nebo Claude: přiložte soubor nebo vložte text do chatu.</span></div>
+      <div><b>Ptejte se</b><span>Např. „Co z toho je použitelné pro naši slévárnu?“ Čísla a citace si ověřte ve zdroji.</span></div>
+    </div>
+  </section>
+
+  <section id="pruzkum">
+    <div class="kicker">Data z oboru</div>
+    <h2>Průzkum: AI ve slévárenství 2026</h2>
+    <p class="lead">Dva dotazníky, 18. 6. – 3. 7. 2026, ve spolupráci se Svazem sléváren a Českou slévárenskou společností.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">9 z 10</div><div class="l">slévačů už AI používá</div></div>
+      <div class="stat"><div class="n">73 %</div><div class="l">uživatelů jen ve free verzi</div></div>
+      <div class="stat"><div class="n">87 %</div><div class="l">firem bez formálních pravidel</div></div>
+      <div class="stat"><div class="n">2,3–2,8×</div><div class="l">zralejší firmy s ambasadorem</div></div>
+    </div>
+    <div class="method"><b>Čtěte s rozumem:</b> n = 49 lidí a 23 firem, dobrovolné vyplnění, vlastní výpověď. Výsledky nejsou reprezentativní pro celý obor. Rozdíl firem s ambasadorem je korelace na 13 a 9 firmách, ne důkaz příčiny. U některých otázek se procenta počítají ze zmínek, ne z respondentů.</div>
+
+    <div class="panels" id="panels"></div>
+    <div class="dl">
+      <a class="btn" href="podklady/pruzkum-slevarenstvi-2026.md" download>Všechna čísla v .md</a>
+      <span class="muted" style="font-size:15px">Zdroj: Šebesta, P.: Adopce AI ve slévárenství: kde jsou slévači a kde firmy? Slévárenství 2026.</span>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <span>Ing. Pavel Šebesta · Slévárna Kuřim, a.s.</span>
+  <span>Design: SLK v3 · obsah ze Slévárenských dnů 2026</span>
+</div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* data = čísla z článku Slévárenství 2026, stejná jako podklady/pruzkum-slevarenstvi-2026.md */
+const P = [
+  { t: 'Jaké nástroje používají', s: 'Slévači, podíl zmínek (75 zmínek)', bars: [['ChatGPT',40],['Gemini',23],['Copilot',19],['Žádný',12],['Claude',4],['Perplexity',3]] },
+  { t: 'K čemu AI používají', s: 'Slévači, podíl zmínek', bars: [['Rešerše, legislativa',21],['Administrativa, texty',17],['Technické konzultace',12],['Data, Excel',8],['Překlady',8],['Marketing, obchod',7],['Prezentace',7],['Zápisy, sumarizace',7],['Nepoužívá',7],['Osobní život, děti',4],['Vývoj, kód',2]] },
+  { t: 'Používání podle pozice', s: 'Slévači (n = 49), podíl v dané skupině', pairs: [['C-level',[['Denně',17],['Bez AI',6],['Jen zdarma',72]]],['THP výroba',[['Denně',44],['Bez AI',25],['Jen zdarma',69]]],['THP obchod',[['Denně',50],['Bez AI',13],['Jen zdarma',75]]]] },
+  { t: 'Co brzdí slévače', s: 'Podíl zmínek', bars: [['Žádná překážka',37],['Halucinace, nedůvěra',35],['Nevím jak / není čas',20]] },
+  { t: 'Čtyři pilíře ve firmách', s: 'Slévárny (n = 23), podíl firem', bars: [['Ambasador AI',57],['Placené nástroje',57],['Školení',43],['Neformální pravidla',43],['Formální pravidla',13]] },
+  { t: 'Vliv ambasadora', s: '13 firem s ambasadorem × 9 bez něj', legend: true, pairs: [['Školení',[['S ambasadorem',62],['Bez ambasadora',22]]],['Placený nástroj',[['S ambasadorem',77],['Bez ambasadora',33]]],['Pravidla',[['S ambasadorem',77],['Bez ambasadora',33]]]] },
+  { t: 'Co o rizicích firmy neví', s: 'Slévárny (n = 23), podíl firem', bars: [['Shadow AI neznají',52],['AI Act neznají',70],['Řeší obojí',13]] },
+  { t: 'Co brzdí firmy', s: 'Podíl zmínek', bars: [['Znalosti, ambasador',24],['Bezpečnost dat',20],['Nedůvěra k výstupům',16],['Management',12],['Náklady',8]] }
+];
+const el = document.getElementById('panels');
+el.innerHTML = P.map(p => {
+  let body = '';
+  if (p.bars) body = p.bars.map(([l, v], i) => `<div class="bar"><span>${l}</span><div class="track"><div class="fill" data-w="${v}"></div></div><span class="v">${v} %</span></div>`).join('');
+  if (p.pairs) body = (p.legend ? '<div class="legend"><span><i style="background:var(--accent)"></i>S ambasadorem</span><span><i style="background:var(--gray-400)"></i>Bez ambasadora</span></div>' : '') +
+    p.pairs.map(([l, rows]) => `<div class="pair"><span>${l}</span>` + rows.map(([n, v], i) => `<div class="tr${p.legend ? "" : " l"}" title="${n}">${p.legend ? "" : `<span class="rl">${n}</span>`}<div class="track"><div class="fill${p.legend ? (i ? ' alt' : '') : ''}" style="${!p.legend ? 'opacity:' + (1 - i * .28) : ''}" data-w="${v}"></div></div><span class="v">${v} %</span></div>`).join('') + '</div>').join('');
+  
+  return `<div class="panel"><h3>${p.t}</h3><div class="sub">${p.s}</div>${body}</div>`;
+}).join('');
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('[data-w]').forEach(f => f.style.width = f.dataset.w + '%'); io.unobserve(e.target); } }), { threshold: .15 });
+el.querySelectorAll('.panel').forEach(p => io.observe(p));
+if (!('IntersectionObserver' in window)) el.querySelectorAll('[data-w]').forEach(f => f.style.width = f.dataset.w + '%');
+
+/* kopírování textu do schránky */
+const toast = document.getElementById('toast');
+function say(m) { toast.textContent = m; toast.classList.add('on'); setTimeout(() => toast.classList.remove('on'), 2200); }
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+  try { const t = await (await fetch(b.dataset.copy)).text(); await navigator.clipboard.writeText(t); say('Text zkopírován. Vložte ho do své AI.'); }
+  catch (e) { say('Kopírování nejde, použijte „Stáhnout“.'); }
+}));
+
+/* světlý / tmavý režim */
+const root = document.documentElement;
+try { const s = localStorage.getItem('sd-theme'); if (s) root.dataset.theme = s; } catch (e) {}
+document.getElementById('theme').addEventListener('click', () => {
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  root.dataset.theme = next; try { localStorage.setItem('sd-theme', next); } catch (e) {}
+});
+</script>
+</body>
+</html>
