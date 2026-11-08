@@ -130,3 +130,7 @@ Podíl zmínek (celkem 75 zmínek):
 ---
 
 Jednotlivé odpovědi respondentů ani názvy společností zde nejsou.
+
+## Surová data slévačů (CSV)
+
+`pruzkum-slevaci-2026-data.csv`: 49 řádků, jeden na respondenta, odpovědi z dotazníku „AI v rukou slévačů“ tak, jak byly zadány (typ společnosti, pozice, jak dlouho a jak často používá AI, kolik platí, použité nástroje; `true`/`false` = nástroj zaškrtnut/nezaškrtnut). Vynechány jsou identifikátory, časy odeslání a volné textové odpovědi (mohly by prozradit respondenta). Firemní dotazník (n = 23) ve formě řádkových dat nezveřejňujeme.
