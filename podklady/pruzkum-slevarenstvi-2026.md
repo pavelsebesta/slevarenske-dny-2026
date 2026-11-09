@@ -130,10 +130,3 @@ Podíl zmínek (celkem 75 zmínek):
 ---
 
 Jednotlivé odpovědi respondentů ani názvy společností zde nejsou.
-
-## Surová data (CSV)
-
-Dva soubory, jeden řádek = jedna odpověď, hodnoty tak, jak je lidé zadali. Sloupec „Použito v článku (ano/ne)“ říká, jestli odpověď vstoupila do čísel výše. Vynechány jsou identifikátory, časy odeslání a volné textové odpovědi (mohly by prozradit respondenta).
-
-- `pruzkum-slevaci-2026-data.csv`: dotazník „AI v rukou slévačů“, 52 řádků. V článku 49. Neuvedené jsou 2 pozdější odpovědi (po 3. 7.) a 1 konzultant, který nespadá ani do jedné ze tří skupin článku (slévárna, dodavatel, vzdělávací instituce). Nástroje: `true`/`false` = zaškrtnuto/nezaškrtnuto.
-- `pruzkum-firmy-2026-data.csv`: dotazník „AI ve slévárenských společnostech“, 24 řádků. V článku 23, 1 pozdější odpověď (7. 8.).
