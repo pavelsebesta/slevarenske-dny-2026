@@ -118,7 +118,7 @@ AI navíc bývá prezentována s důrazem na to, kolik času lidem ušetří. M�
 ![Pavlův paradox](img/clanek-obr4-pavluv-paradox.jpg)
 
 > **Obrázek: ilustrace (kartička) — Pavlův paradox** (Obr. 4. Časová past dle mého AI nástroje)
-> Kartička se zaoblenými rohy, krémové pozadí, kreslený styl. **Vlevo nahoře** ikona usměvavého robota (AI), vedle ní **nadpis „Pavlův paradox“** psaný rukopisným písmem, modře podtržený. **Pod nadpisem citát** ve vysokých uvozovkách (modré): „Čím více času AI ušetří, tím víc projektů Pavel vymyslí.“ (slovo „více“ je podtržené modře, „Pavel“ je podtržený). **Vpravo** kreslený vousatý muž v modré košili se zamyšleným výrazem, brada opřená o ruku, sedí u otevřeného notebooku, vedle hrnek s kávou. **Nad jeho hlavou** myšlenková bublina s propojenými žlutými lístečky (diagram) a žárovkou. **Dole** oddělovací čára a ikona hodin s textem „Čistý časový zisk: 0 hodin.“ (číslice „0 hodin“ je podtržena modře). Vyjadřuje, že ušetřený čas se hned zaplní novými projekty. Obrázek vygenerovala AI.
+> Kartička se zaoblenými rohy, krémové pozadí, kreslený styl. **Vlevo nahoře** ikona usměvavého robota (AI), vedle ní **nadpis „Pavlův paradox“** psaný rukopisným písmem, modře podtržený. **Pod nadpisem citát** ve vysokých uvozovkách (modré): „Čím více času AI ušetří, tím víc projektů Pavel vymyslí.“ (slovo „více“ je podtržené modře, „Pavel“ je podtržený). **Vpravo** kreslený vousatý muž v modré košili se zamyšleným výrazem, brada opřená o ruku, sedí u otevřeného notebooku, vedle hrnek s kávou. **Nad jeho hlavou** myšlenková bublina s propojenými žlutými lístečky (diagram) a žárovkou. **Dole** oddělovací čára a ikona hodin s textem „Čistý časový zisk: 0 hodin.“ (číslice „0 hodin“ je podtržena modře). Vyjadřuje, že ušetřený čas se hned zaplní novými projekty. Obrázek vygenerovala AI (uvádí zkrácená verze článku).
 
 Poslední kategorii odpovědí, kterou zmíním, je sice malá, zahrnuje pouze 2 % odpovědí (tj. 1x), ale je významná právě tím, že je malá. Pouze 1 respondent zmiňuje firemní omezení kvůli ochraně dat. To ukazuje nepřipravenost firem na způsob ochrany dat v éře AI, jejíž nástup v posledním roce významně zrychlil. Firmy mohou použít drastická omezení formou systémového zakázání nástrojů na svém zařízení, ale tím pouze zkomplikují práci zaměstnancům, kteří už zjistili, že jim AI šetří čas. Opět si dovolím uvést jednu konkrétní citaci:
 
@@ -220,7 +220,7 @@ Na jakých základech v našich firmách stavíme?
 > | 3 | fialová | monitor s ozubeným kolem | PLACENÉ NÁSTROJE | „**Dostupnost** ověřených nástrojů minimalizuje rizika Shadow AI a zajišťuje správu.“ |
 > | 4 | oranžová | štít s fajfkou | PRAVIDLA A STRATEGIE | „**Pravidla** a **strategie** nastavují jasné mantinely a podporují inovace odpovědným způsobem.“ |
 >
-> **Dole** přes celou šířku pás s ikonou štítu a textem: „Společně tvoří pevný základ, na kterém může AI přinášet hodnotu bezpečně, eticky a udržitelně.“ Čtyři pilíře jsou zde rovnocenné (ambasador je jeden z nich). Obrázek vygenerovala AI.
+> **Dole** přes celou šířku pás s ikonou štítu a textem: „Společně tvoří pevný základ, na kterém může AI přinášet hodnotu bezpečně, eticky a udržitelně.“ Čtyři pilíře jsou zde rovnocenné (ambasador je jeden z nich). Obrázek vypadá jako generovaný AI (zdroj to u tohoto obrázku neuvádí).
 
 2. **Školení**
    Ve 43 % společností (n=10) proběhlo nějaké školení zaměstnanců. Dle dat je podíl externích a interních školení totožný. Procenta proškolených firem dle jednotlivých typů je vyrovnané v rozmezí 40–50 %.
@@ -270,7 +270,7 @@ Jeden člověk, většinou bez formální role, bez rozpočtu, koreluje s dvoj- 
 >
 > **Základ (podstavec pod všemi třemi sloupy):** „**ZÁKLAD: AMBASADOR AI**“ | „Ambasador propojuje lidi, inspiruje, pomáhá ostatním a posouvá AI kulturu dopředu.“
 > **Pás se čtyřmi položkami dole** (ikona a text): **2,8×** „vyšší pravděpodobnost, že firma prošla školením“ (tyrkysová ikona, graf růstu); **2,3×** „vyšší pravděpodobnost, že firma poskytuje placené nástroje“ (fialová ikona, kufřík); **2,3×** „vyšší pravděpodobnost, že firma má nastavena pravidla“ (oranžová ikona, dokument se štítem); „Jeden člověk může být rozdílem, který posune celou firmu vpřed.“ (modrá ikona, skupina osob).
-> Rozdíl proti Obr. 7: ambasador už není čtvrtý sloup, ale základ, na kterém stojí tři další. Čísla 2,8× a 2,3× odpovídají poměrům z Tab. III (62 % / 22 % ≈ 2,8; 77 % / 33 % ≈ 2,3). Obrázek vygenerovala AI.
+> Rozdíl proti Obr. 7: ambasador už není čtvrtý sloup, ale základ, na kterém stojí tři další. Čísla 2,8× a 2,3× odpovídají poměrům z Tab. III (62 % / 22 % ≈ 2,8; 77 % / 33 % ≈ 2,3). Obrázek vygenerovala AI (uvádí zkrácená verze článku: „vytvořeno s využitím generativní AI“).
 
 Ze získaných odpovědí také vidíme, že 100 % firem, ve kterých proběhlo školení, disponuje pravidly, z toho 30 % formálními a 70 % neformálními. Z firem bez provedeného školení uvádí pouze 23 % alespoň neformální pravidla.
 
@@ -331,7 +331,7 @@ Vaše vize a představy jsou rozmanité – prakticky se zamýšlíte nad každ�
 >
 > Pod osmi boxy ZÍTRA je zelený box s fajfkou: „**AI se stává součástí firemních procesů, ne jen pomocníkem jednotlivce.**“
 > **Úplně dole přes celou šířku** pás s hvězdou: „**CÍL:** Zvýšit efektivitu, kvalitu rozhodování a konkurenceschopnost díky zodpovědnému a promyšlenému využití AI.“
-> Barvy nadpisů boxů označují obor (odrážky vždy černě). Obrázek vygenerovala AI.
+> Barvy nadpisů boxů označují obor (odrážky vždy černě). Obrázek vypadá jako generovaný AI (zdroj to u tohoto obrázku neuvádí).
 
 Tak jako s každou novou technologií se i trh zaplavuje spoustou firem zabývajících se implementací AI, některé mladší, jiné se zkušenostmi s automatizací. My ve slévárnách máme jeden zvyk, který je důležitý i v éře AI – „V každé slévárně funguje něco jiného“. Je málo pravděpodobné, že Vás osloví firma se zkušenostmi implementací, nebo vývojem SW z jiné slévárny. Ale vždy je potřeba vědět, na jakých datech byl nástroj trénován.
 
